@@ -1,23 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>레드향 주문하기</title>
-</head>
-<body>
-  <h1>레드향 주문하기</h1>
-  <form action="">
-    <fieldset>
-      <legend>상품 선택</legend>
-     
-    </fieldset>
+  <head>
+    <meta charset="UTF-8" />
+    <title>레드향 주문하기</title>
+  </head>
+  <body>
+    <h1>레드향 주문하기</h1>
+    <form action="">
+      <fieldset>
+        <legend>상품 선택</legend>
+      </fieldset>
 
-    <fieldset>
-      <legend>배송 정보</legend>
-      <!-- Do it! 배송 정보 입력하는 폼 만들기 -->
-      
-    </fieldset> 
-    
-  </form>
-</body>
+      <fieldset>
+        <legend>배송 정보</legend>
+        <!-- Do it! 배송 정보 입력하는 폼 만들기 -->
+        <!--<label for></label><input id>-->
+        <ul>
+          <li>
+            <label for="username">이름 : </label>
+            <input type="text" size="10" maxlength="10" id="username" />
+          </li>
+          <li>
+            <label for="address">배송주소 : </label>
+            <input type="url" id="addr" />
+          </li>
+          <li>
+            <label for="mail">이메일 : </label> <input type="email" id="mail" />
+          </li>
+          <li>
+            <label for="phone">연락처 : </label> <input type="tel" id="phone" />
+          </li>
+        </ul>
+      </fieldset>
+      <input type="submit" />
+    </form>
+  </body>
 </html>

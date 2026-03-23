@@ -9,9 +9,17 @@
     <!-- Do it! form 태그 삽입하기 & 그룹으로 묶고 제목 붙이기 -->
     <form action="register.html" method="get">
       <fieldset>
-        이름 <input type="text" name="Hong" /><br />
-        연락처 <input type="text" /><br />
+        <legend>추가정보<legend>
+        <label>이름 <input type="text" name="Hong" /></label><br />
+        <label for="phone">연락처</label>
+        <input type="text" id="phone"/><br />
         <input type="submit" value="전송" />
+      </fieldset>
+      <fieldset>
+        <legend>추가정보</legend>
+        취미<input type="text" name="hong" /><br />
+        전공<input type="text" /><br />
+      </fieldset>
     </form>
   </body>
 </html>

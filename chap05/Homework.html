@@ -1,24 +1,25 @@
+<!--위치는 졸업한 학교 바탕으로 작성했습니다. -->
 <!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>봉사동아리 회원가입 신청서</title>
+    <title>대학교 봉사동아리 회원가입 신청서</title>
   </head>
   <body>
-    <form>
-    <h1>나래 회원가입을 환영합니다.</h1>
+    <h1>회원가입을 환영합니다.</h1>
     <fieldset>
+      <form>
       <legend><b>학생 정보</b></legend>
       <ul id="stu_info"> 
         <li>
         <label for="stu_name"><b>이름</b></label>
-        <input type="text" maxlength="10" autofocus required>
+        <input size="25" type="text" maxlength="10" autofocus required placeholder="외국인은 한글명으로 적어주세요">
         </li>
 
         <li>
         <label for="stu_num"><b>학번</b></label>
-        <input type="text" maxlangth="10" required placeholder="예시) 2601340028">
+        <input size="25" type="text" maxlangth="10" required placeholder="예시) 2601340028">
         </li>
 
         <li>
@@ -40,7 +41,12 @@
         </li>
 
         <li>
-        <label for="stu_hobby"><b>희망 장소</b> (다중 선택 가능)</label><br/>
+        <label for="phone"><b>연락처</b></label>
+        <input type="tel" id="phone" required placeholder="하이픈 '-' 빼고 적어주세요.">
+        </li>
+
+        <li>
+        <label for="stu_hobby"><b>주 봉사 희망 장소</b> (다중 선택 가능)</label><br/>
             
             <input type="checkbox" name="sub" id="1">양로원<label for="1">
 
@@ -53,23 +59,28 @@
 
         <li>    
         <label for="stu_other"><b>그 외 희망 장소</b></label><br/>
-        <textarea rows="5" cols="50" placeholder="희망 하는 장소가 있다면 적어주세요."></textarea>
+        <textarea rows="5" cols="50" placeholder="희망 하는 장소가 있다면 적어주세요. 꼭 적지 않아도 괜찮습니다."></textarea>
         </li>
 
         <li>    
         <label for="stu_other"><b>지원 동기</b></label><br/>
-        <textarea rows="5" cols="50"placeholder="간략하게 적어주세요."></textarea>
+        <textarea rows="5" cols="50"placeholder="간략하게 적어주세요. 꼭 적지 않아도 괜찮습니다."></textarea>
         </li>
+    </form>
     </fieldset>
     
     <fieldset>
+        <form>
         <legend><b>환영회 참석 여부</b></legend>
         <label><input type="radio" name="welcome" value="yes">환영회 참여</label>
         </label><input type="radio" name="welcome" value="no">환영회 불참</label>
+        </form>
     </fieldset>
     <fieldset>
-        <legend><b>봉사 일정 정하기</b></legend>
+        <form>
+        <legend><b>3월 봉사 일정</b></legend>
         <text readonly>3월 4째주 봉사 인원을 모집합니다. <br/>
+            봉사 장소는 그 주마다 정해집니다. <br/>
             주말만 참여 가능하며 토요일, 일요일 중 선택해주세요. (양일 가능)<br/>
             시간은 오전 10시, 오후 2시 두 타임이 있습니다.<br/>
             오전은 2시까지, 오후는 6시까지 활동합니다.<br/>
@@ -78,10 +89,9 @@
         <input type="date" name="date" value="20260308"/>
         <input type="time" name="time" />
         <input type="time" name="time" />
-
+    </form>
     </fieldset>
     <input type="submit" value="제출하기"> 
     <input type="reset" value="취소하기">
-
   </body>
 </html>

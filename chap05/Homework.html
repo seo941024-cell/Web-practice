@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>봉사동아리 회원가입 신청서</title>
+  </head>
+  <body>
+    <form>
+    <h1>나래 회원가입을 환영합니다.</h1>
+    <fieldset>
+      <legend><b>학생 정보</b></legend>
+      <ul id="stu_info"> 
+        <li>
+        <label for="stu_name"><b>이름</b></label>
+        <input type="text" maxlength="10" autofocus required>
+        </li>
+
+        <li>
+        <label for="stu_num"><b>학번</b></label>
+        <input type="text" maxlangth="10" required placeholder="예시) 2601340028">
+        </li>
+
+        <li>
+        <label for="stu_class"><b>학년</b></label>
+        <select id="class" size="1">
+            <option value="1">1학년</option>
+            <option value="2">2학년</option>
+            <option value="3">3학년</option>
+            <option value="4">4학년</option>
+            <option value="5">5학년</option>
+            <option value="6">6학년</option>
+        </select>
+        </li>
+        <li>
+        <label for="stu_pass"><b>비밀번호</b></label>
+        <input type="password" maxlangth="4" required placeholder=
+            "사용할 사물함 비밀번호입니다. 숫자 4개를 적어주세요"
+            size="39">
+        </li>
+
+        <li>
+        <label for="stu_hobby"><b>희망 장소</b> (다중 선택 가능)</label><br/>
+            
+            <input type="checkbox" name="sub" id="1">양로원<label for="1">
+
+            <input type="checkbox" name="sub" id="2">헌혈의집<label for="2">
+
+            <input type="checkbox" name="sub" id="3">공지천 환경 정화<label for="3">
+
+            <input type="checkbox" name="sub" id="4">장애인 작업 활동 지원<label for="4">
+        </li>
+
+        <li>    
+        <label for="stu_other"><b>그 외 희망 장소</b></label><br/>
+        <textarea rows="5" cols="50" placeholder="희망 하는 장소가 있다면 적어주세요."></textarea>
+        </li>
+
+        <li>    
+        <label for="stu_other"><b>지원 동기</b></label><br/>
+        <textarea rows="5" cols="50"placeholder="간략하게 적어주세요."></textarea>
+        </li>
+    </fieldset>
+    
+    <fieldset>
+        <legend><b>환영회 참석 여부</b></legend>
+        <label><input type="radio" name="welcome" value="yes">환영회 참여</label>
+        </label><input type="radio" name="welcome" value="no">환영회 불참</label>
+    </fieldset>
+    <fieldset>
+        <legend><b>봉사 일정 정하기</b></legend>
+        <text readonly>3월 4째주 봉사 인원을 모집합니다. <br/>
+            주말만 참여 가능하며 토요일, 일요일 중 선택해주세요. (양일 가능)<br/>
+            시간은 오전 10시, 오후 2시 두 타임이 있습니다.<br/>
+            오전은 2시까지, 오후는 6시까지 활동합니다.<br/>
+        </text>
+        <input type="date" name="date" value="20260307"/>
+        <input type="date" name="date" value="20260308"/>
+        <input type="time" name="time" />
+        <input type="time" name="time" />
+
+    </fieldset>
+    <input type="submit" value="제출하기"> 
+    <input type="reset" value="취소하기">
+
+  </body>
+</html>

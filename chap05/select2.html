@@ -8,12 +8,16 @@
   <h1>레드향 주문하기</h1>
   <form action="">
     <!-- Do it! 드롭다운 목록 만들기 -->
-    <label for="prod">상품 선택</label>
-    <select id="prod" size="4" multiple>
+    <select id="prod">
+      <optgroup label="선물용">선물용
       <option value="s3">선물용 3kg</option>
       <option value="s5">선물용 5kg</option>
+      </optgroup>
+      <optgroup label="가정용">가정용
       <option value="f3" selected >가정용 3kg</option>
       <option value="f5">가정용 5kg</option>
+      </optgroup
+      >
   </form>
 </body>
 </html>

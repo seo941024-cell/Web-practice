@@ -1,26 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>회원 가입</title>
     <style>
       #container {
-        width:600px;
-        margin:10px auto;
+        width: 600px;
+        margin: 10px auto;
       }
     </style>
-    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="css/register.css" />
   </head>
-  <body> 
-    <div id="container">
+  <body>
       <h1>회원 가입을 환영합니다</h1>
-      <form>
- 
-        <div id="buttons">
+        <form>
+        <fieldset>
+          <legend><b>사용자 정보</b></legend>
+          <ul id="user_info">
+            <li>
+            <label for="user_name"><b>아이디</b></label>
+            <input type="text" maxlength="10" autofocus required placeholder="4자~10자 사이, 공백없이">
+            </li>
+
+            <li>
+            <label for="user_mail"><b>이메일</b></label>
+            <input type="email" id="usera_addr" required>
+            </li>
+
+            <li>
+            <label for="user_password"><b>비밀번호</b></label>
+            <input type="password" required placeholder="문자와 숫자, 특수 기호 포함">
+            </li>
+
+            <li>
+            <label for="user_pass_re"><b>비밀번호 확인</b></label>
+            <input type="password" required >
+            </li>
+
+            <li>
+            <label for="user_road"><b>가입 경로</b></label>
+            <select id="road" size="1">
+              <option value="blog">블로그</option>
+              <option value="insta">인스타그램</option>
+              <option value="cafe">카페</option>
+              <option value="friend">친구</option>
+              <option value="other">그 외 경로</option>
+            </select>
+            </li>
+
+            <li>
+            <label for="user_memo"><b>메모</b></label>
+            <textarea placeholder="남길 말씀이 있다면 여기에"></textarea>
+            </li>
+
+        </fieldset>
+      <fieldset>
+        <legend>이벤트와 새로운 소식</legend>
+          <label><input type="radio" name="mail_ac" value="yes">메일 수신</label></li>
+          <label><input type="radio" name="mail_no" value="no">메일 수신 안함</label></li>
+      </fieldset>
           <!-- 가입하기, 취소 버튼 작성 -->
-          
-        </div>
-      </form>
-    </div>           
+    <input type="submit"value="가입하기">
+    <input type="reset" value="취소" />
+    </form>
   </body>
 </html>

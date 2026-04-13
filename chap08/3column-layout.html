@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3단 레이아웃</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      #wrapper {
+        width: 1200px;
+      }
+
+      #header {
+        width: 100%;
+        height: 120px;
+        background: #eeeeee;
+        border: 1px solid black;
+      }
+
+      #sidebar-left {
+        width: 250px;
+        height: 600px;
+        background: #ffffff;
+        border: 1px solid black;
+        float: left;
+      }
+
+      #contents {
+        width: 800px;
+        height: 600px;
+        background: #ffffff;
+        border: 1px solid black;
+        float: left;
+      }
+
+      #sidebar-right {
+        width: 150px;
+        height: 600px;
+        background: #ffffff;
+        border: 1px solid black;
+        float: right;
+      }
+
+      #footer {
+        width: 100%;
+        height: 100px;
+        background: #eeeeee;
+        border: 1px solid black;
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="header">헤더</div>
+      <div id="sidebar-left">사이드바</div>
+      <div id="contents">본문</div>
+      <div id="sidebar-right">사이드바</div>
+      <div id="footer">푸터</div>
+    </div>
+  </body>
+</html>

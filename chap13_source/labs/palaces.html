@@ -1,203 +1,234 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>서울의 궁 - 경복궁</title>
-<style>
-* {
-  box-sizing: border-box;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>강릉 경포 벚꽃 축제🌸</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+        padding: 20px;
+        background: rgba(255 230 230);
+        margin: 0;
+      }
+
+      /* Header - 업로드하신 근정전 사진 활용 */
+      .header {
+        padding: 80px 30px;
+        text-align: center;
+
+        /* 배경 이미지 경로 수정 */
+        background-image:
+          linear-gradient(rgba(163, 73, 164, 0.05), rgba(255, 0, 0, 0.05)),
+          url("./images/PYH2026040504960006200_P4.jpg");
+        background-size: cover;
+        background-position: center 40%;
+        color: white;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        border-top-right-radius: 20px;
+        border-top-left-radius: 20px;
+      }
+
+      .header h1 {
+        font-size: 55px;
+        margin:  0;
+        letter-spacing: 5px;
+      }
+
+      .header p {
+        font-size: 25px;
+        margin-top: 10px;
+      }
+      
+      .header h1 {
+       -webkit-text-stroke: 2px white; /*그냥 넣으니 글자가 잘 안보여서 검색했습니다*/
+        color: rgb(240, 147, 170);
+        font-style:oblique;
+      }
+      
+      .header h1 + p {
+        -webkit-text-stroke: px white;
+        color: rgb(255, 255, 255);
+        font-style:oblique;
+      }
+
+      /* Navigation Bar */
+      .topnav {
+        overflow: hidden;
+        background-color: rgb(242, 139, 150); /* 깊은 밤의 궁궐 색상 */
+        position: sticky; /* 스크롤 시 상단 고정 */
+        top: 0;
+        z-index: 1000;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
+
+      .topnav a {
+        float: left;
+        display: block;
+        color: #ffffff;
+        text-align: center;
+        padding: 16px 20px;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      .topnav a:hover {
+        background-color: rgb(220, 120, 130);
+        color: white;
+      }
+
+      /* Layout Columns */
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+
+      .leftcolumn {
+        float: left;
+        width: 70%;
+      }
+
+      .rightcolumn {
+        float: left;
+        width: 30%;
+        padding-left: 20px;
+      }
+
+      /* Image Styling */
+      .card img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        display: block;
+      }
+
+      .card {
+        background-color: white;
+        padding: 25px;
+        margin-top: 20px;
+        border: 1px solid #e6e6e6;
+        border-radius: 15px;
+      }
+
+      .card h2 {
+        font-size: 28px;
+        color: black;
+        border-left: 10px solid rgb(222, 93, 122);
+        padding-left: 15px;
+        margin-bottom: 20px;
+      }
+
+      .card h3 {
+        color: #1a2a3a;
+        margin-bottom: 15px;
+      }
+
+      /* Footer */
+      .footer {
+        padding: 30px;
+        text-align: center;
+        background: rgb(242, 139, 150);
+        color: #ffffff;
+        margin-top: 30px;
+        line-height: 1.6;
+      }
+      .main-card p::first-letter {
+  font-size: 25px;
+  color: rgb(219, 116, 127);
 }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>강릉 경포 벚꽃축제</h1>
+      <p>걷는 순간이 여행이 되는 봄, 강릉 경포 벚꽃축제</p>
+    </div>
 
-body {
-  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-  padding: 10px;
-  background: #fdfcf5;
-  margin: 0;
-}
+   <div class="topnav">
+        <a href="#festival">강릉 벚꽃 축제 소개</a>
+        <a href="#festival-info">축제 정보</a>
+        <a href="#experience">체험 행사</a>
+        <a href="https://www.gn.go.kr/" target="_blank" style="float: right">강릉시 홈페이지</a>
+    </div>
 
-/* Header - 업로드하신 근정전 사진 활용 */
-.header {
-  padding: 80px 30px;
-  text-align: center;
+    <div class="row">
+      <div class="leftcolumn">
+        <div class="card main-card">
+          <h2>봄의 햇살을 담은 경포호(鏡浦湖)</h2>
+          <img
+            src="./images/default.jpg"
+            alt="꽃이 만개한 경포호 사진"
+          />
+          <p style="line-height: 1.8; margin-top: 20px">
+            <strong>경포호</strong>를 중심으로 펼쳐지는 벚꽃길은 강릉 봄 여행의 대표 코스입니다. <br>
+호수를 따라 길게 이어진 산책로에는 매년 봄이 되면 수많은 벚꽃이 만개하여, 분홍빛 터널처럼 장관을 이룹니다.<br><br>
 
-  /* 배경 이미지 경로 수정 */
-  background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url("./images/Gyeongbokgung_Palace_with_blue_sky_in_Seoul.jpg"); 
-  background-size: cover;
-  background-position: center 40%;
-  color: white;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-}
+맑은 호수 물결 위로 비치는 벚꽃 그림자는 또 다른 아름다움을 만들어내며, 낮과 밤이 각각 다른 분위기를 선사합니다.  
+특히 바람이 불 때마다 꽃잎이 흩날리는 모습은 마치 꽃비가 내리는 듯한 장면을 연출해 방문객들에게 깊은 인상을 남깁니다.<br><br>
 
-.header h1 {
-  font-size: 55px;
-  margin: 0;
-  letter-spacing: 5px;
-}
+가벼운 산책부터 사진 촬영, 자전거 코스까지 다양한 방식으로 즐길 수 있어 남녀노소 모두에게 사랑받는 봄철 명소입니다.
+          </p>
+        </div>
 
-.header p {
-  font-size: 20px;
-  margin-top: 10px;
-}
+        <div class="card main-card">
+          <h2>밤을 밝히는 경포호 야간 조명</h2>
+          <img src="./images/1393027_453491_145.jpg" alt="경포호 야간조명" />
+          <p style="line-height: 1.8; margin-top: 20px">
+            <strong>경포호 야간 조명</strong>은 해가 지고 난 뒤 더욱 빛을 발하는 강릉의 대표적인 밤 풍경입니다.  
+    어둠이 내려앉으면 호수 주변으로 설치된 조명이 하나둘 켜지며, 경포호 일대를 아름다운 빛으로 물들입니다.<br><br>
 
-/* Navigation Bar */
-.topnav {
-  overflow: hidden;
-  background-color: #1a2a3a; /* 깊은 밤의 궁궐 색상 */
-  position: sticky; /* 스크롤 시 상단 고정 */
-  top: 0;
-  z-index: 1000;
-}
+    잔잔한 호수 위로 비치는 조명의 반영은 고요한 분위기에 화려함을 더해주며, 낮과는 전혀 다른 신비로운 풍경을 만들어냅니다.  
+    <br><br>
 
-.topnav a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 16px 20px;
-  text-decoration: none;
-  transition: 0.3s;
-}
+    조명을 따라 천천히 산책을 즐기다 보면 일상의 분주함에서 벗어나 여유로운 밤의 감성을 느낄 수 있습니다.  
+    가족, 연인과 함께하기 좋은 장소이자 사진 촬영 명소로도 사랑받는 특별한 공간입니다.
+          </p>
+        </div>
+      </div>
 
-.topnav a:hover {
-  background-color: #c6a05e;
-  color: white;
-}
+      <div class="rightcolumn">
+        <div class="card" id="festival">
+          <h3>🌸벚꽃 축제🌸</h3>
+          <p style="padding-left: 0px; line-height: 1.75">
+              <b>2026년 강릉 벚꽃 축제</b>는 경포대 등 주요 명소를 통합하여 4월 초순에
+              절정을 이루며, 도심 전역이 벚꽃 명소로 변신합니다.
+            <br /><br> &nbsp;&nbsp;특히 경포호수 5.73km 조명길, 야간 라이트닝 터널, 버스킹 등이
+            펼쳐지며, 3~4월 말 만개 시기에 맞춰 관광객들에게 봄의 낭만을
+            선사합니다.</p>
+          </p>
+        </div>
+        <div class="card" id="festival-info">
+          <h3>🌸축제 정보 카드🌸</h3>
+          <ul style="padding-left: 20px; line-height: 2">
+            <li>기간: 3월 30일 ~ 4월 10일</li>
+            <li>장소: 강릉시 강문동 경포호수</li>
+            <li>행사: 야간 조명, 프리마켓, <br />벚꽃길 버스킹</li>
+          </ul>
+        </div>
+        <div class="card" id="experience">
+          <h3>🌸체험 행사🌸</h3>
+          <ul style="padding-left: 20px; line-height: 3">
+            <li><b>경포습지광장 키즈플레이존<br /></b>▶ 나무 놀이터🪵 <br />
+            <li><b>경포 벚꽃 도둑을 잡아라 🚨<br /></li></b>
+            <li><b>걷기 프로그램 🚶‍♂️</li></b>
+          </p>
+        </div>
+      </div>
+    </div>
 
-/* Layout Columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+    <div class="footer">
+      <p>
+        (25461) 강원특별자치도 강릉시 경포로 365<br />
+        대표문의: 033-640-5114<br />
+        관리: 강릉 경포 벚꽃축제 운영사무국
 
-.leftcolumn {   
-  float: left;
-  width: 70%;
-}
-
-.rightcolumn {
-  float: left;
-  width: 30%;
-  padding-left: 20px;
-}
-
-/* Image Styling */
-.card img {
-  width: 100%;
-  height: auto;
-  border-radius: 4px;
-  display: block;
-}
-
-.card {
-  background-color: white;
-  padding: 25px;
-  margin-top: 20px;
-  border: 1px solid #e6e6e6;
-  border-radius: 8px;
-}
-
-.card h2 {
-  font-size: 28px;
-  color: #1a2a3a;
-  border-left: 5px solid #c6a05e;
-  padding-left: 15px;
-  margin-bottom: 20px;
-}
-
-.card h3 {
-  color: #1a2a3a;
-  margin-bottom: 15px;
-}
-
-/* Footer */
-.footer {
-  padding: 30px;
-  text-align: center;
-  background: #1a2a3a;
-  color: #aaa;
-  margin-top: 30px;
-  line-height: 1.6;
-}
-
-/* Responsive design 
-@media screen and (max-width: 800px) {
-  .leftcolumn, .rightcolumn {   
-    width: 100%;
-    padding: 0;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .topnav a {
-    float: none;
-    width: 100%;
-  }
-}
-  */
-</style>
-</head>
-<body>
-
-<div class="header">
-  <h1>서울의 궁</h1>
-  <p>전통과 현대가 공존하는 조선의 법궁, 경복궁</p>
-</div>
-
-<div class="topnav">
-  <a href="#">경복궁 소개</a>
-  <a href="#">관람안내</a>
-  <a href="#">행사일정</a>
-  <a href="#" style="float:right">로그인</a>
-</div>
-
-<div class="row">
-  <div class="leftcolumn">
-    <div class="card">
-      <h2>법궁의 위엄, 근정전(勤政殿)</h2>
-      <img src="./images/Gyeongbokgung_Palace_with_blue_sky_in_Seoul.jpg" alt="경복궁 근정전 정면 사진">
-      <p style="line-height: 1.8; margin-top: 20px;">
-        <strong>근정전</strong>은 경복궁의 정전으로, 왕의 즉위식이나 문무백관의 조례, 외국 사신의 접견 등 국가의 공식 행사가 거행되던 곳입니다. 
-        사진 속 탁 트인 조정과 품계석은 조선 시대의 엄격한 위계와 질서를 잘 보여줍니다. 뒷편으로 보이는 북악산의 기세가 근정전의 웅장함을 더해줍니다.
       </p>
     </div>
-
-    <div class="card">
-      <h2>연회의 장소, 경회루(慶會樓)</h2>
-      <img src="./images/Gyonghoeuru.jpg" alt="벚꽃 핀 경회루 전경">
-      <p style="line-height: 1.8; margin-top: 20px;">
-        봄바람에 흩날리는 벚꽃과 어우러진 <strong>경회루</strong>는 경복궁에서 가장 아름다운 풍경 중 하나입니다. 
-        단일 평면으로는 우리나라에서 가장 큰 누각으로, 연못 위에 떠 있는 듯한 건축 양식은 자연과 인공의 완벽한 조화를 상징합니다.
-      </p>
-    </div>
-  </div>
-
-  <div class="rightcolumn">
-    <div class="card">
-      <h3>궁궐 소식</h3>
-      <p>현재 '경복궁 야간 관람' 예매가 진행 중입니다. 아름다운 밤의 궁궐을 만나보세요.</p>
-    </div>
-    <div class="card">
-      <h3>주요 궁궐</h3>
-      <ul style="padding-left: 20px; line-height: 2;">
-        <li>창덕궁 (후원)</li>
-        <li>창경궁 (야간개장)</li>
-        <li>덕수궁 (석조전)</li>
-        <li>경희궁</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>관람 시간</h3>
-      <p>09:00 - 18:00 (화요일 휴궁)</p>
-    </div>
-  </div>
-</div>
-
-<div class="footer">
-  <p>(03045) 서울특별시 종로구 사직로 161<br>
-  대표번호: 02-3700-3900 | 관리: 문화재청 경복궁관리소</p>
-</div>
-
-</body>
+  </body>
 </html>

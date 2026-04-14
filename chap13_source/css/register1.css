@@ -46,4 +46,10 @@ body {
 	padding: 7px 25px;
 }
 
+label {
+	/*float: left;*/
+	float : inline-start;
+	font-size: 13px;
+	width: 110px;
+}
 

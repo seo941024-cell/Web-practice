@@ -1,50 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>가상 선택자</title>
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      gap: 20px;
-    }
-    .container {
-      width: 300px;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      text-align: center;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>가상 선택자</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        gap: 20px;
+      }
+      .container {
+        width: 300px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+      }
 
-    /* Do it! 가상 선택자를 사용해 항목 선택하기 */
-    
-    /* container의 첫번째 자식 배경색 변경 */
- 
+      /* Do it! 가상 선택자를 사용해 항목 선택하기 */
 
-    /* container의 p요소 중 2번째 자식 요소에 배경과 글자색 변경 */
+      /* container의 첫번째 자식 배경색 변경 */
+      .container :first-child {
+        background-color: yellow;
+      }
 
+      /* container의 p요소 중 2번째 자식 요소에 배경과 글자색 변경 */
+      .container p:nth-of-type(2) {
+        background-color: greenyellow;
+        color: yellow;
+      }
 
-    /* container의 마지막 자식 테두리 지정 */
-
-    
-    /* container의 div 요소의 유일한 자식에 대해 배경색 변경 */
-
-  </style>
-</head>
-<body>
-  <div class="container">
-    <p>첫 번째</p>
-    <div>두 번째</div>
-    <p>세 번째</p>
-    <div>네 번째</div>
-  </div>
-  <div class="container">
-    <div>혼자~</div>
-  </div>
-</body>
+      /* container의 마지막 자식 테두리 지정 */
+      .container :last-child {
+        border: 1px solid gray;
+        border-radius: 15px;
+      }
+      /* container의 div 요소의 유일한 자식에 대해 배경색 변경 */
+      .container div:only-child {
+        background-color: blueviolet;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p>첫 번째</p>
+      <div>두 번째</div>
+      <p>세 번째</p>
+      <div>네 번째</div>
+    </div>
+    <div class="container">
+      <div>혼자~</div>
+    </div>
+  </body>
 </html>

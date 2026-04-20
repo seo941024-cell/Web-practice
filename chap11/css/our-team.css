@@ -76,3 +76,20 @@ a:hover {
 }
 
 /* 화면 너비가 768px 이상일 경우 .column을 3개씩 배치하는 미디어 쿼리 작성 */
+
+@media screen and (min-width: 768px){
+  #container {
+    padding: 1em;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2em 1em;
+  }
+
+  .column {
+    flex: 0 0 33.3%;
+    padding: 0 1em;
+  }
+}

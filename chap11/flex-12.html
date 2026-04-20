@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>플렉스-12</title>
+    <style>
+      .search-bar {
+        display: flex; /* 가로로 나란히 배치 */
+        gap: 10px;
+      }
+      /* flex-grow 로 남는 공간에 따른 입력상자와 버튼의 영역을 4:1 비율로 나누어 차지하도록 지정하기 */
+      .input-box {
+        flex-grow: 4;
+        padding: 10px;
+      }
+      .search-btn {
+        flex-grow: 1;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        color: white;
+
+        background: linear-gradient(270deg, #00f5ff, #00ffa3, #00c3ff, #00f5ff);
+        background-size: 600% 600%;
+        animation: aquaFlow 4s ease infinite;
+      }
+
+      @keyframes aquaFlow {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="search-bar">
+      <input type="text" class="input-box" placeholder="검색어를 입력하세요" />
+      <button class="search-btn">검색</button>
+    </div>
+  </body>
+</html>

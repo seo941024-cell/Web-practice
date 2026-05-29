@@ -1,0 +1,16 @@
+{
+  "name": "파스텔 루틴 투두",
+  "short_name": "루틴투두",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#8e6bf2",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

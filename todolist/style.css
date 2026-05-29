@@ -1,0 +1,449 @@
+/* ==========================================================================
+   🔤 4대 천왕 커스텀 폰트 레이아웃 링킹 (font1.ttf ~ font4.ttf 매핑)
+   ========================================================================== */
+@font-face {
+    font-family: 'MemoNunt';
+    src: url('font1.ttf') format('truetype');
+    font-weight: normal; font-style: normal;
+}
+@font-face {
+    font-family: 'MaruMinya';
+    src: url('font2.ttf') format('truetype');
+    font-weight: normal; font-style: normal;
+}
+@font-face {
+    font-family: 'MaruBuri';
+    src: url('font3.ttf') format('truetype');
+    font-weight: normal; font-style: normal;
+}
+@font-face {
+    font-family: 'MapleStory';
+    src: url('font4.ttf') format('truetype');
+    font-weight: normal; font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* 🌟 대폭 개선: 라디오 선택에 따라 일반 텍스트는 물론 input, textarea, button까지 내 폰트로 완벽 강제 일괄 적용 */
+.font-choice-1 *, .font-choice-1 input, .font-choice-1 textarea, .font-choice-1 button { font-family: 'MemoNunt', sans-serif !important; }
+.font-choice-2 *, .font-choice-2 input, .font-choice-2 textarea, .font-choice-2 button { font-family: 'MaruMinya', sans-serif !important; }
+.font-choice-3 *, .font-choice-3 input, .font-choice-3 textarea, .font-choice-3 button { font-family: 'MaruBuri', sans-serif !important; }
+.font-choice-4 *, .font-choice-4 input, .font-choice-4 textarea, .font-choice-4 button { font-family: 'MapleStory', sans-serif !important; }
+
+/* 혹시 모를 구버전 클래스 결합을 대비한 안전망 백업 매핑 */
+.font-system *, .font-system input, .font-system textarea, .font-system button { font-family: 'MemoNunt', sans-serif !important; }
+.font-round * , .font-round input, .font-round textarea, .font-round button  { font-family: 'MaruMinya', sans-serif !important; }
+
+/* ==========================================================================
+   🎨 테마 파스텔 채도 업그레이드 & 전용 2톤 순환 컬러 필드 설정
+   ========================================================================== */
+
+/* 1. 보라 테마 */
+.theme-purple {
+    --main-theme: #8e6bf2;
+    --main-theme-dark: #4b36a1;
+    --main-theme-light: #d6ceff;
+    --bg-overlay-rgb: 242, 237, 255;
+    --item-bg-1: rgba(235, 224, 255, 0.95);
+    --item-bg-2: rgba(251, 248, 255, 0.95);
+    --body-bg: #dbd2fc;
+}
+
+/* 2. 레드 테마 */
+.theme-red {
+    --main-theme: #f57373;
+    --main-theme-dark: #9e2b2b;
+    --main-theme-light: #ffd4d4;
+    --bg-overlay-rgb: 255, 238, 238;
+    --item-bg-1: rgba(255, 219, 219, 0.95);
+    --item-bg-2: rgba(255, 247, 247, 0.95);
+    --body-bg: #ffd4d4;
+}
+
+/* 3. 옐로우 테마 */
+.theme-yellow {
+    --main-theme: #f5c41b;
+    --main-theme-dark: #8c6e00;
+    --main-theme-light: #fff0b8;
+    --bg-overlay-rgb: 255, 253, 224;
+    --item-bg-1: rgba(255, 244, 194, 0.95);
+    --item-bg-2: rgba(255, 253, 240, 0.95);
+    --body-bg: #ffeeb3;
+}
+
+/* 4. 그린옐로우 테마 */
+.theme-greenyellow {
+    --main-theme: #99cc14;
+    --main-theme-dark: #4e6b00;
+    --main-theme-light: #e4f7a6;
+    --bg-overlay-rgb: 250, 255, 232;
+    --item-bg-1: rgba(224, 247, 166, 0.95);
+    --item-bg-2: rgba(251, 255, 242, 0.95);
+    --body-bg: #e3f5b0;
+}
+
+/* 5. 블루 테마 */
+.theme-blue {
+    --main-theme: #5294fa;
+    --main-theme-dark: #1b4b94;
+    --main-theme-light: #cce0ff;
+    --bg-overlay-rgb: 235, 243, 255;
+    --item-bg-1: rgba(204, 224, 255, 0.95);
+    --item-bg-2: rgba(245, 249, 255, 0.95);
+    --body-bg: #cae0ff;
+}
+
+/* 6. 브라운 테마 */
+.theme-brown {
+    --main-theme: #c2916b;
+    --main-theme-dark: #704727;
+    --main-theme-light: #f5ded0;
+    --bg-overlay-rgb: 253, 248, 242;
+    --item-bg-1: rgba(240, 217, 199, 0.95);
+    --item-bg-2: rgba(253, 249, 245, 0.95);
+    --body-bg: #ebd1c2;
+}
+
+body {
+    background-color: var(--body-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-height: 100dvh; 
+    padding: 0;
+    overflow: hidden;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 450px;
+    height: 100vh;
+    height: 100dvh; 
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    border: none;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1;
+    transition: background 0.2s ease;
+}
+
+.top-profile-bar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 24px 20px 10px 20px;
+}
+
+.profile-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-color: var(--main-theme-light);
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+}
+
+.profile-info { display: flex; flex-direction: column; }
+.welcome-text { font-size: 17px; color: var(--main-theme-dark); line-height: 1.4; }
+.welcome-text strong { color: var(--main-theme); font-weight: bold; }
+
+.content-area {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    padding: 10px 20px 85px 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.title-container { min-height: 40px; display: flex; align-items: center; }
+.title { text-align: left; color: var(--main-theme-dark); font-size: 24px; font-weight: bold; cursor: pointer; padding: 2px 5px; border-radius: 8px; }
+
+.todo-title-input {
+    display: none; width: 100%; font-size: 24px; font-weight: bold; color: var(--main-theme-dark);
+    background-color: rgba(255, 255, 255, 0.95); border: 2px solid var(--main-theme); border-radius: 12px; padding: 4px 10px; outline: none;
+}
+
+.sub-title { color: var(--main-theme-dark); font-size: 16px; font-weight: bold; }
+.input-group { display: flex; gap: 10px; align-items: center; position: relative; }
+
+.todo-input {
+    flex: 1; padding: 12px 18px; border: 2px solid var(--main-theme-light); border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.9); color: var(--main-theme-dark); font-size: 16px; outline: none;
+}
+.todo-input:focus { border-color: var(--main-theme); }
+
+/* 🌟 대폭 교정: 어떤 폰트의 고유 상하 여백 오프셋 상태에서도 '+'가 동그라미 한가운데 고정되도록 완전 수치화 정렬 */
+.add-btn {
+    background-color: var(--main-theme); color: white; border: none; width: 45px; height: 45px;
+    border-radius: 50%; font-size: 26px; cursor: pointer; 
+    display: flex; align-items: center; justify-content: center;
+    line-height: 0; padding: 0; margin: 0; flex-shrink: 0; 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    text-indent: 0; text-align: center;
+}
+/* 메이플스토리체 등 특수 폰트 하향 쏠림 대응 보정 가이드 */
+.add-btn::before {
+    content: '';
+    display: inline-block;
+    height: 0;
+    vertical-align: middle;
+}
+
+.todo-list { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    background-color: var(--item-bg-1) !important;
+    border-radius: 18px;
+    color: #333;
+    font-size: 17px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.01);
+    transition: transform 0.15s ease;
+}
+.todo-item:nth-child(2n) { 
+    background-color: var(--item-bg-2) !important;
+}
+
+.drag-handle { margin-right: 12px; color: #bcccb0; cursor: grab; font-size: 14px; user-select: none; }
+.todo-item.dragging { opacity: 0.3; transform: scale(0.96); border: 2px dashed var(--main-theme); background-color: rgba(255,255,255,0.5) !important; }
+
+.todo-text.completed { opacity: 0.45; text-decoration: line-through; color: #777; }
+.todo-checkbox { margin-right: 12px; width: 18px; height: 18px; accent-color: var(--main-theme); cursor: pointer; }
+.todo-text { flex: 1; cursor: pointer; }
+.delete-btn { background: none; border: none; color: #cca4a4; cursor: pointer; font-size: 16px; }
+.delete-btn:hover { color: #ba7979; }
+
+.memo-write-box { display: flex; flex-direction: column; gap: 8px; }
+.memo-textarea {
+    width: 100%; height: 100px; border: 2px solid var(--main-theme-light); border-radius: 20px;
+    padding: 15px; font-size: 15px; color: var(--main-theme-dark); outline: none; resize: none;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+.save-memo-btn { background-color: var(--main-theme); color: white; border: none; padding: 12px; border-radius: 18px; font-size: 15px; font-weight: bold; cursor: pointer; }
+.memo-list { display: flex; flex-direction: column; gap: 10px; margin-top: 5px; }
+.memo-card { background-color: rgba(255, 255, 255, 0.9); border: 1px solid var(--main-theme-light); border-radius: 20px; padding: 15px; display: flex; flex-direction: column; gap: 5px; }
+.memo-card-header { display: flex; justify-content: space-between; align-items: center; }
+.memo-date { font-size: 11px; color: #888; }
+
+.memo-btn-box { display: flex; gap: 10px; align-items: center; }
+
+/* 🌟 대폭 교정: 수정 칸도 삭제 단추처럼 투명하고 완전 외곽선(border) 없는 순수 글자 스타일로 정립 */
+.memo-edit-btn { background: none; border: none; color: #a4b6cc; font-size: 12px; cursor: pointer; padding: 0; outline: none; box-shadow: none; }
+.memo-edit-btn:hover { color: #7697bf; }
+.memo-delete-btn { background: none; border: none; color: #dbccd1; font-size: 12px; cursor: pointer; padding: 0; outline: none; box-shadow: none; }
+.memo-delete-btn:hover { color: #ba798f; }
+
+.memo-card-content { font-size: 15px; color: #333; line-height: 1.4; word-break: break-all; }
+
+.setting-section { background-color: rgba(255, 255, 255, 0.82); border-radius: 22px; padding: 15px; border: 1px solid var(--main-theme-light); }
+.section-title { font-size: 15px; color: var(--main-theme-dark); margin-bottom: 10px; }
+
+.profile-edit-group { display: flex; align-items: center; gap: 15px; width: 100%; }
+.profile-upload-label { width: 65px; height: 65px; border-radius: 50%; background-color: #fff; border: 2px dashed var(--main-theme); display: flex; align-items: center; justify-content: center; cursor: pointer; background-size: cover; background-position: center; flex-shrink: 0; }
+.profile-upload-label span { font-size: 11px; color: var(--main-theme); text-align: center; }
+
+.nickname-edit-box { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+.nickname-inside-input { width: 100% !important; padding: 8px 14px !important; font-size: 14px !important; }
+.nickname-inside-btn { width: 100% !important; padding: 8px !important; font-size: 13px !important; border-radius: 12px !important; }
+
+.theme-selector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.theme-btn { border: none; padding: 10px; border-radius: 12px; color: white; font-size: 12px; font-weight: bold; cursor: pointer; transition: transform 0.1s; }
+.theme-btn:active { transform: scale(0.95); }
+.btn-red { background-color: #f57373; } .btn-yellow { background-color: #f5c41b; } .btn-greenyellow { background-color: #99cc14; }
+.btn-blue { background-color: #5294fa; } .btn-brown { background-color: #c2916b; } .btn-purple { background-color: #8e6bf2; }
+
+.custom-file-btn { display: block; text-align: center; background-color: #fff; border: 2px dashed var(--main-theme); color: var(--main-theme-dark); padding: 10px; border-radius: 15px; font-size: 13px; font-weight: bold; cursor: pointer; }
+.setting-row { display: flex; flex-direction: column; gap: 5px; align-items: flex-start; width: 100%; }
+.setting-label { font-size: 12px; color: #555; font-weight: bold; }
+.theme-select { width: 100%; padding: 8px; border-radius: 10px; border: 1px solid var(--main-theme-light); outline: none; font-size: 13px; color: #333; }
+
+.font-selector { display: flex; flex-direction: column; gap: 8px; }
+.font-option { display: flex; align-items: center; padding: 12px 15px; background-color: rgba(255, 255, 255, 0.9); border: 1px solid var(--main-theme-light); border-radius: 15px; cursor: pointer; font-size: 14px; color: #333; }
+.font-option input { margin-right: 12px; accent-color: var(--main-theme); }
+
+.app-reset-btn { width: 100%; background-color: #a8282e; color: white; border: none; padding: 14px; border-radius: 18px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: auto; }
+
+.under-navigation-bar {
+    position: absolute; 
+    bottom: 0;
+    left: 0;
+    z-index: 10; 
+    width: 100%;
+    height: 68px; 
+    background-color: rgba(255, 255, 255, 0.96);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    width: 75px;
+    color: #8a8894;
+    font-size: 11px;
+    font-weight: 500;
+    transition: color 0.15s ease;
+}
+
+.nav-btn.active {
+    color: var(--main-theme);
+    font-weight: bold;
+}
+
+.nav-icon-wrapper {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.win-icon {
+    position: relative;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
+}
+
+.icon-win-home {
+    width: 15px;
+    height: 15px;
+    border: 2px solid #8a8894;
+}
+.icon-win-home::before {
+    content: '';
+    position: absolute;
+    top: 4.5px; left: -2px;
+    width: 15px; height: 2px;
+    background-color: #8a8894;
+}
+.icon-win-home::after {
+    content: '';
+    position: absolute;
+    top: -2px; left: 4.5px;
+    width: 2px; height: 15px;
+    background-color: #8a8894;
+}
+.nav-btn.active .icon-win-home { border-color: var(--main-theme); }
+.nav-btn.active .icon-win-home::before,
+.nav-btn.active .icon-win-home::after { background-color: var(--main-theme); }
+
+.icon-win-memo {
+    width: 13px;
+    height: 16px;
+    border: 2px solid #8a8894;
+    border-radius: 1px;
+}
+.icon-win-memo::before {
+    content: '';
+    position: absolute;
+    top: 3px; left: 2px;
+    width: 5px; height: 2px;
+    background-color: #8a8894;
+    box-shadow: 0 4px 0 #8a8894;
+}
+.nav-btn.active .icon-win-memo { border-color: var(--main-theme); }
+.nav-btn.active .icon-win-memo::before { background-color: var(--main-theme); box-shadow: 0 4px 0 var(--main-theme); }
+
+.icon-win-setting {
+    width: 15px;
+    height: 15px;
+    border: 2px solid #8a8894;
+    transform: rotate(45deg);
+}
+.icon-win-setting::after {
+    content: '';
+    position: absolute;
+    top: 2.5px; left: 2.5px;
+    width: 6px; height: 6px;
+    border: 2px solid #8a8894;
+    border-radius: 50%;
+    background-color: #fff;
+    transform: rotate(-45deg);
+}
+.nav-btn.active .icon-win-setting { border-color: var(--main-theme); }
+.nav-btn.active .icon-win-setting::after { border-color: var(--main-theme); }
+
+.tab-content { display: none; }
+.tab-content.active { display: flex; flex-direction: column; }
+
+.crop-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.crop-container {
+    background-color: #fff;
+    width: 100%;
+    max-width: 380px;
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.crop-image-area {
+    width: 100%;
+    height: 350px;
+    background-color: #222;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.crop-image-area img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+.crop-btn-group {
+    display: flex;
+    padding: 12px;
+    gap: 10px;
+    background-color: #f7f5fa;
+}
+.crop-cancel-btn {
+    flex: 1; border: none; padding: 12px; border-radius: 12px; background-color: #e4e1e8;
+    color: #555; font-weight: bold; cursor: pointer; font-size: 14px;
+}
+.crop-confirm-btn {
+    flex: 1.5; border: none; padding: 12px; border-radius: 12px; background-color: var(--main-theme);
+    color: white; font-weight: bold; cursor: pointer; font-size: 14px;
+}
+.cropper-view-box, .cropper-face {
+    border-radius: 50% !important;
+}

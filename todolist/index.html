@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>파스텔 루틴 투두리스트</title>
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  </head>
+
+  <body class="theme-purple font-choice-1" id="app-body">
+    <div class="app-container" id="main-container">
+      <div class="bg-overlay" id="bg-overlay-layer"></div>
+
+      <div class="top-profile-bar">
+        <div class="profile-avatar" id="header-profile-img"></div>
+        <div class="profile-info">
+          <span class="welcome-text" id="header-message"
+            >오늘도 행복한 하루 ⭐</span
+          >
+        </div>
+      </div>
+
+      <div id="todo-tab" class="content-area tab-content active">
+        <div class="title-container">
+          <h2 class="title" id="todo-title" onclick="enableTitleEdit()">
+            오늘의 할 일
+          </h2>
+          <input
+            type="text"
+            id="todo-title-input"
+            class="todo-title-input"
+            onblur="disableTitleEdit()"
+          />
+        </div>
+
+        <div class="input-group">
+          <input
+            type="text"
+            id="todo-input"
+            class="todo-input"
+            placeholder="새로운 루틴 추가하기..."
+          />
+          <button id="add-btn" class="add-btn">+</button>
+        </div>
+
+        <ul id="todo-list" class="todo-list"></ul>
+      </div>
+
+      <div id="memo-tab" class="content-area tab-content">
+        <div class="title-container">
+          <h2 class="title" id="memo-title" onclick="enableMemoTitleEdit()">
+            비밀 메모장
+          </h2>
+          <input
+            type="text"
+            id="memo-title-input"
+            class="todo-title-input"
+            onblur="disableMemoTitleEdit()"
+          />
+        </div>
+
+        <div class="memo-write-box">
+          <textarea
+            id="memo-input"
+            class="memo-textarea"
+            placeholder="소중한 기록을"
+          ></textarea>
+          <button id="save-memo-btn" class="save-memo-btn">
+            메모 저장하기
+          </button>
+        </div>
+
+        <div class="memo-list-container">
+          <h3 class="sub-title">저장된 메모 목록</h3>
+          <div id="memo-list" class="memo-list"></div>
+        </div>
+      </div>
+
+      <div id="setting-tab" class="content-area tab-content">
+        <h2 class="title">앱 설정</h2>
+
+        <div class="setting-section">
+          <h3 class="section-title">프로필 설정</h3>
+          <div class="profile-edit-group">
+            <label
+              for="profile-file-input"
+              class="profile-upload-label"
+              id="setting-profile-preview"
+            >
+              <span>사진 선택</span>
+            </label>
+            <input
+              type="file"
+              id="profile-file-input"
+              accept="image/*"
+              style="display: none"
+            />
+
+            <div class="nickname-edit-box">
+              <input
+                type="text"
+                id="nickname-input"
+                class="todo-input nickname-inside-input"
+                placeholder="이름 입력"
+              />
+              <button
+                id="save-profile-btn"
+                class="save-memo-btn nickname-inside-btn"
+              >
+                변경
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-section" style="margin-top: 12px">
+          <h3 class="section-title">컬러 테마 톤 변경</h3>
+          <div class="theme-selector-grid">
+            <button class="theme-btn btn-red" onclick="changeAppTheme('red')">
+              레드
+            </button>
+            <button
+              class="theme-btn btn-yellow"
+              onclick="changeAppTheme('yellow')"
+            >
+              옐로우
+            </button>
+            <button
+              class="theme-btn btn-greenyellow"
+              onclick="changeAppTheme('greenyellow')"
+            >
+              라임
+            </button>
+            <button class="theme-btn btn-blue" onclick="changeAppTheme('blue')">
+              블루
+            </button>
+            <button
+              class="theme-btn btn-brown"
+              onclick="changeAppTheme('brown')"
+            >
+              브라운
+            </button>
+            <button
+              class="theme-btn btn-purple"
+              onclick="changeAppTheme('purple')"
+            >
+              보라
+            </button>
+          </div>
+        </div>
+
+        <div class="setting-section" style="margin-top: 12px">
+          <h3 class="section-title">배경화면 설정</h3>
+          <div class="bg-settings-box">
+            <label for="bg-file-input" class="custom-file-btn"
+              >내 갤러리에서 배경 가져오기</label
+            >
+            <input
+              type="file"
+              id="bg-file-input"
+              accept="image/*"
+              style="display: none"
+            />
+
+            <div class="setting-row" style="margin-top: 10px">
+              <span class="setting-label">배경 크기 채우기</span>
+              <select
+                id="bg-size-select"
+                class="theme-select"
+                onchange="updateBgSize(this.value)"
+              >
+                <option value="cover">화면에 가득 맞춤</option>
+                <option value="contain">이미지 원래 비율</option>
+                <option value="repeat">바둑판 배열 반복</option>
+              </select>
+            </div>
+
+            <div class="setting-row" style="margin-top: 10px">
+              <span class="setting-label">배경 선명도 (글씨 가독성 조절)</span>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  width: 100%;
+                "
+              >
+                <input
+                  type="range"
+                  id="bg-opacity-slider"
+                  min="5"
+                  max="95"
+                  value="55"
+                  oninput="updateBgOpacity(this.value)"
+                />
+                <span
+                  id="opacity-val-text"
+                  style="font-size: 12px; color: #666; min-width: 25px"
+                  >선명</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-section" style="margin-top: 12px">
+          <h3 class="section-title">글씨체 스타일</h3>
+          <div class="font-selector">
+            <label class="font-option">
+              <input
+                type="radio"
+                name="font-choice"
+                value="font-choice-1"
+                id="font-r-1"
+                onchange="changeAppFont(this.value)"
+              />
+              메모넌트꾹꾹체
+            </label>
+            <label class="font-option">
+              <input
+                type="radio"
+                name="font-choice"
+                value="font-choice-2"
+                id="font-r-2"
+                onchange="changeAppFont(this.value)"
+              />
+              마루미냐체
+            </label>
+            <label class="font-option">
+              <input
+                type="radio"
+                name="font-choice"
+                value="font-choice-3"
+                id="font-r-3"
+                onchange="changeAppFont(this.value)"
+              />
+              마루부리체
+            </label>
+            <label class="font-option">
+              <input
+                type="radio"
+                name="font-choice"
+                value="font-choice-4"
+                id="font-r-4"
+                onchange="changeAppFont(this.value)"
+              />
+              메이플스토리체
+            </label>
+          </div>
+        </div>
+
+        <button class="app-reset-btn" onclick="resetAllData()">
+          데이터 전체 초기화
+        </button>
+      </div>
+
+      <div class="under-navigation-bar">
+        <button
+          class="nav-btn active"
+          id="nav-todo"
+          onclick="switchTabDirect('todo')"
+        >
+          <div class="nav-icon-wrapper">
+            <div class="win-icon icon-win-home"></div>
+          </div>
+          <span>홈</span>
+        </button>
+        <button class="nav-btn" id="nav-memo" onclick="switchTabDirect('memo')">
+          <div class="nav-icon-wrapper">
+            <div class="win-icon icon-win-memo"></div>
+          </div>
+          <span>메모</span>
+        </button>
+        <button
+          class="nav-btn"
+          id="nav-setting"
+          onclick="switchTabDirect('setting')"
+        >
+          <div class="nav-icon-wrapper">
+            <div class="win-icon icon-win-setting"></div>
+          </div>
+          <span>설정</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="crop-modal" class="crop-modal">
+      <div class="crop-container">
+        <div class="crop-image-area">
+          <img id="crop-preview-target" src="" />
+        </div>
+        <div class="crop-btn-group">
+          <button class="crop-cancel-btn" onclick="closeCropModal()">
+            취소
+          </button>
+          <button class="crop-confirm-btn" onclick="confirmCroppedImage()">
+            동그라미 영역 자르기 ✔️
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let appTitle, memoTitleText, todos, memos, profile, appSettings;
+      let cropper = null; // 크롭 객체 임시 보관함
+      let tempCroppedBase64 = ""; // 임시 임포트 이미지 데이터
+      let editMemoIdx = null; // 현재 수정 중인 메모의 인덱스 추적 변수 (null이면 신규 작성)
+
+      function loadInitialData() {
+        appTitle = localStorage.getItem("app_todo_title") || "오늘의 할 일";
+        memoTitleText = localStorage.getItem("app_memo_title") || "비밀 메모장";
+        todos = JSON.parse(localStorage.getItem("app_todos")) || [
+          { text: "오늘의 루틴 점검하기 📝", completed: false },
+          { text: "가벼운 스트레칭 완료하기 🏃", completed: false },
+        ];
+        memos = JSON.parse(localStorage.getItem("app_memos")) || [];
+        profile = JSON.parse(localStorage.getItem("app_profile")) || {
+          nickname: "사용자",
+          image: "",
+        };
+
+        appSettings = JSON.parse(localStorage.getItem("app_settings")) || {
+          theme: "purple",
+          customBg: "",
+          bgSize: "cover",
+          bgOpacity: 55,
+          fontClass: "font-choice-1",
+        };
+      }
+      loadInitialData();
+
+      const healingMessages = [
+        "오늘도 반짝이는 하루 보내기 ⭐",
+        "넌 지금도 충분히 잘하고 있어 💫",
+        "너만의 리듬대로 천천히 가도 돼 🎵",
+        "오늘도 멋진 하루가 널 기다려 💛",
+        "네 가치는 언제나 세계 최고야 🌏",
+        "작은 성공들이 모여 빛날 거야 ✨",
+        "네 모든 꿈을 온 마음으로 응원해 🌈",
+        "오늘도 기분 좋은 에너지가 가득! 🔋",
+        "오늘 한 걸음 내딛은 널 칭찬해 👏",
+        "네 마음속 맑은 하늘을 지켜줄게 ☀️",
+        "포기하지 않는 네가 가장 아름다워 💖",
+        "네 노력을 내가 다 기억하고 있어 📝",
+        "오늘도 수고했어, 토닥토닥 🌙",
+        "가장 밝게 빛날 너의 내일을 위해 🌟",
+        "특별하지 않아도 소중한 너의 하루 🍀",
+        "마음 편하게 마음 가는 대로 🌊",
+        "스스로를 믿어봐, 넌 최고니까 😎",
+        "오늘도 행복으로 가득 채워보자 🍯",
+      ];
+
+      let currentTab = "todo";
+      let currentRandomMessage = "";
+
+      const todoTitle = document.getElementById("todo-title");
+      const todoTitleInput = document.getElementById("todo-title-input");
+      const memoTitle = document.getElementById("memo-title");
+      const memoTitleInput = document.getElementById("memo-title-input");
+
+      const todoInput = document.getElementById("todo-input");
+      const addBtn = document.getElementById("add-btn");
+      const todoList = document.getElementById("todo-list");
+      const memoInput = document.getElementById("memo-input");
+      const saveMemoBtn = document.getElementById("save-memo-btn");
+      const memoList = document.getElementById("memo-list");
+
+      const headerMessage = document.getElementById("header-message");
+      const headerProfileImg = document.getElementById("header-profile-img");
+      const nicknameInput = document.getElementById("nickname-input");
+      const profileFileInput = document.getElementById("profile-file-input");
+      const settingProfilePreview = document.getElementById(
+        "setting-profile-preview",
+      );
+      const saveProfileBtn = document.getElementById("save-profile-btn");
+
+      const mainContainer = document.getElementById("main-container");
+      const bgOverlayLayer = document.getElementById("bg-overlay-layer");
+      const bgFileInput = document.getElementById("bg-file-input");
+      const bgSizeSelect = document.getElementById("bg-size-select");
+      const bgOpacitySlider = document.getElementById("bg-opacity-slider");
+
+      function pickRandomMessage() {
+        const randomIndex = Math.floor(Math.random() * healingMessages.length);
+        currentRandomMessage = healingMessages[randomIndex];
+      }
+
+      function checkDailyReset() {
+        const now = new Date();
+        const utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+        const kstTime = new Date(utc + 9 * 60 * 60 * 1000);
+        const todayKey = `${kstTime.getFullYear()}-${kstTime.getMonth() + 1}-${kstTime.getDate()}`;
+
+        const lastSavedDate = localStorage.getItem("app_last_reset_date");
+        if (lastSavedDate !== todayKey) {
+          todos.forEach((todo) => (todo.completed = false));
+          localStorage.setItem("app_last_reset_date", todayKey);
+          saveData();
+          renderTodos();
+        }
+      }
+
+      function enableTitleEdit() {
+        todoTitle.style.display = "none";
+        todoTitleInput.style.display = "block";
+        todoTitleInput.value = appTitle;
+        todoTitleInput.focus();
+      }
+      function disableTitleEdit() {
+        const nextTitle = todoTitleInput.value.trim();
+        if (nextTitle !== "") {
+          appTitle = nextTitle;
+          localStorage.setItem("app_todo_title", appTitle);
+        }
+        todoTitle.innerText = appTitle;
+        todoTitle.style.display = "block";
+        todoTitleInput.style.display = "none";
+      }
+
+      function enableMemoTitleEdit() {
+        memoTitle.style.display = "none";
+        memoTitleInput.style.display = "block";
+        memoTitleInput.value = memoTitleText;
+        memoTitleInput.focus();
+      }
+      function disableMemoTitleEdit() {
+        const nextMemoTitle = memoTitleInput.value.trim();
+        if (nextMemoTitle !== "") {
+          memoTitleText = nextMemoTitle;
+          localStorage.setItem("app_memo_title", memoTitleText);
+        }
+        memoTitle.innerText = memoTitleText;
+        memoTitle.style.display = "block";
+        memoTitleInput.style.display = "none";
+      }
+
+      function changeAppTheme(themeName) {
+        appSettings.theme = themeName;
+        if (!appSettings.customBg) {
+          const themeImageMap = {
+            red: "bg1.png",
+            yellow: "bg2.png",
+            greenyellow: "bg3.png",
+            blue: "bg4.png",
+            brown: "bg5.png",
+            purple: "bg6.png",
+          };
+          mainContainer.style.backgroundImage = `url('${themeImageMap[themeName]}')`;
+        } else {
+          mainContainer.style.backgroundImage = `url(${appSettings.customBg})`;
+        }
+        syncBodyClasses();
+        saveSettings();
+        renderTodos();
+      }
+
+      bgFileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            appSettings.customBg = event.target.result;
+            applyBackgroundSettings();
+            saveSettings();
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      function updateBgSize(sizeValue) {
+        appSettings.bgSize = sizeValue;
+        applyBackgroundSettings();
+        saveSettings();
+      }
+
+      function updateBgOpacity(opacityValue) {
+        appSettings.bgOpacity = parseInt(opacityValue);
+        applyBackgroundSettings();
+        saveSettings();
+      }
+
+      function applyBackgroundSettings() {
+        if (appSettings.customBg) {
+          mainContainer.style.backgroundImage = `url(${appSettings.customBg})`;
+        } else {
+          const themeImageMap = {
+            red: "bg1.png",
+            yellow: "bg2.png",
+            greenyellow: "bg3.png",
+            blue: "bg4.png",
+            brown: "bg5.png",
+            purple: "bg6.png",
+          };
+          mainContainer.style.backgroundImage = `url('${themeImageMap[appSettings.theme]}')`;
+        }
+
+        if (appSettings.bgSize === "repeat") {
+          mainContainer.style.backgroundSize = "auto";
+          mainContainer.style.backgroundRepeat = "repeat";
+        } else {
+          mainContainer.style.backgroundSize = appSettings.bgSize;
+          mainContainer.style.backgroundRepeat = "no-repeat";
+        }
+        mainContainer.style.backgroundPosition = "center";
+
+        const opacityPercent = appSettings.bgOpacity / 100;
+        bgOverlayLayer.style.background = `rgba(var(--bg-overlay-rgb), ${opacityPercent})`;
+
+        bgSizeSelect.value = appSettings.bgSize;
+        bgOpacitySlider.value = appSettings.bgOpacity;
+
+        const storedFontRadio = document.getElementById(
+          `font-r-${appSettings.fontClass.split("-")[2]}`,
+        );
+        if (storedFontRadio) storedFontRadio.checked = true;
+
+        syncBodyClasses();
+      }
+
+      profileFileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            document.getElementById("crop-modal").style.display = "flex";
+            const imageEl = document.getElementById("crop-preview-target");
+            imageEl.src = event.target.result;
+
+            if (cropper) {
+              cropper.destroy();
+            }
+
+            cropper = new Cropper(imageEl, {
+              aspectRatio: 1,
+              viewMode: 1,
+              background: false,
+              autoCropArea: 0.8,
+            });
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      function confirmCroppedImage() {
+        if (!cropper) return;
+        const canvas = cropper.getCroppedCanvas({ width: 200, height: 200 });
+        tempCroppedBase64 = canvas.toDataURL("image/jpeg");
+
+        headerProfileImg.style.backgroundImage = `url(${tempCroppedBase64})`;
+        headerProfileImg.innerHTML = "";
+        settingProfilePreview.style.backgroundImage = `url(${tempCroppedBase64})`;
+        settingProfilePreview.innerHTML = "";
+
+        closeCropModal();
+      }
+
+      function closeCropModal() {
+        document.getElementById("crop-modal").style.display = "none";
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
+        }
+        profileFileInput.value = "";
+      }
+
+      function renderProfile() {
+        if (profile.image) {
+          headerProfileImg.style.backgroundImage = `url(${profile.image})`;
+          headerProfileImg.innerHTML = "";
+          settingProfilePreview.style.backgroundImage = `url(${profile.image})`;
+          settingProfilePreview.innerHTML = "";
+        } else {
+          headerProfileImg.style.backgroundImage = "none";
+          settingProfilePreview.style.backgroundImage = "none";
+          settingProfilePreview.innerHTML = "<span>사진 선택</span>";
+        }
+
+        if (tempCroppedBase64 === "") {
+          nicknameInput.value = profile.nickname;
+        }
+
+        headerMessage.innerHTML =
+          currentTab === "setting"
+            ? `오늘도 힘내요, 반가워요!<br><strong>${profile.nickname}</strong>님♥️`
+            : currentRandomMessage;
+      }
+
+      saveProfileBtn.addEventListener("click", () => {
+        const newName = nicknameInput.value.trim();
+        if (newName !== "") {
+          profile.nickname = newName;
+          if (tempCroppedBase64 !== "") {
+            profile.image = tempCroppedBase64;
+            tempCroppedBase64 = "";
+          }
+          localStorage.setItem("app_profile", JSON.stringify(profile));
+          renderProfile();
+          alert("프로필 변경이 완료되었습니다! 💞");
+        }
+      });
+
+      function renderTodos() {
+        todoList.innerHTML = "";
+        todoTitle.innerText = appTitle;
+
+        todos.forEach((todo, index) => {
+          const li = document.createElement("li");
+          li.className = "todo-item";
+          li.draggable = true;
+          li.dataset.index = index;
+
+          li.innerHTML = `
+                    <div class="drag-handle">☰</div>
+                    <input type="checkbox" class="todo-checkbox" ${todo.completed ? "checked" : ""}>
+                    <span class="todo-text ${todo.completed ? "completed" : ""}">${todo.text}</span>
+                    <button class="delete-btn" onclick="deleteTodo(${index})">✕</button>
+                `;
+
+          const checkbox = li.querySelector(".todo-checkbox");
+          checkbox.addEventListener("change", () => {
+            todos[index].completed = checkbox.checked;
+            saveData();
+            renderTodos();
+          });
+
+          li.querySelector(".todo-text").addEventListener("click", () => {
+            checkbox.checked = !checkbox.checked;
+            checkbox.dispatchEvent(new Event("change"));
+          });
+
+          bindDragEvents(li);
+          todoList.appendChild(li);
+        });
+      }
+
+      let dragSrcEl = null;
+      function bindDragEvents(el) {
+        el.addEventListener("dragstart", handleDragStart);
+        el.addEventListener("dragover", handleDragOver);
+        el.addEventListener("drop", handleDrop);
+        el.addEventListener("dragend", handleDragEnd);
+        el.addEventListener("touchstart", handleTouchStart, { passive: false });
+        el.addEventListener("touchmove", handleTouchMove, { passive: false });
+        el.addEventListener("touchend", handleTouchEnd);
+      }
+
+      function handleDragStart(e) {
+        this.classList.add("dragging");
+        dragSrcEl = this;
+        e.dataTransfer.effectAllowed = "move";
+      }
+      function handleDragOver(e) {
+        if (e.preventDefault) {
+          e.preventDefault();
+        }
+        return false;
+      }
+      function handleDrop(e) {
+        if (e.stopPropagation) {
+          e.stopPropagation();
+        }
+        if (dragSrcEl !== this) {
+          const fromIndex = parseInt(dragSrcEl.dataset.index);
+          const toIndex = parseInt(this.dataset.index);
+          const targetItem = todos.splice(fromIndex, 1)[0];
+          todos.splice(toIndex, 0, targetItem);
+          saveData();
+          renderTodos();
+        }
+        return false;
+      }
+      function handleDragEnd() {
+        this.classList.remove("dragging");
+      }
+
+      let touchStartEl = null;
+      function handleTouchStart(e) {
+        if (e.target.className === "drag-handle") {
+          touchStartEl = this;
+          this.classList.add("dragging");
+        }
+      }
+      function handleTouchMove(e) {
+        if (!touchStartEl) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const target = document.elementFromPoint(touch.clientX, touch.clientY);
+        const li = target ? target.closest(".todo-item") : null;
+        if (li && li !== touchStartEl) {
+          const fromIndex = parseInt(touchStartEl.dataset.index);
+          const toIndex = parseInt(li.dataset.index);
+          const targetItem = todos.splice(fromIndex, 1)[0];
+          todos.splice(toIndex, 0, targetItem);
+          touchStartEl.dataset.index = toIndex;
+          li.dataset.index = fromIndex;
+          saveData();
+          renderTodos();
+          touchStartEl = todoList.querySelector(`[data-index='${toIndex}']`);
+          touchStartEl.classList.add("dragging");
+        }
+      }
+      function handleTouchEnd() {
+        if (touchStartEl) {
+          touchStartEl.classList.remove("dragging");
+          touchStartEl = null;
+          renderTodos();
+        }
+      }
+
+      function addTodo() {
+        const text = todoInput.value.trim();
+        if (text === "") return;
+        todos.push({ text: text, completed: false });
+        todoInput.value = "";
+        saveData();
+        renderTodos();
+      }
+
+      function deleteTodo(index) {
+        todos.splice(index, 1);
+        saveData();
+        renderTodos();
+      }
+
+      function renderMemos() {
+        memoList.innerHTML = "";
+        memoTitle.innerText = memoTitleText;
+        if (memos.length === 0) {
+          memoList.innerHTML = `<p style="text-align:center; color: var(--main-theme-dark); font-size:15px; margin-top:10px;">저장된 메모가 없어요</p>`;
+          return;
+        }
+        memos.forEach((memo, index) => {
+          const memoCard = document.createElement("div");
+          memoCard.className = "memo-card";
+          memoCard.innerHTML = `
+                    <div class="memo-card-header">
+                        <span class="memo-date">${memo.date} ${memo.isEdited ? "(수정됨)" : ""}</span>
+                        <div class="memo-btn-box">
+                            <button class="memo-edit-btn" onclick="startEditMemo(${index})">수정</button>
+                            <button class="memo-delete-btn" onclick="deleteMemo(${index})">삭제</button>
+                        </div>
+                    </div>
+                    <div class="memo-card-content">${memo.content.replace(/\n/g, "<br>")}</div>
+                `;
+          memoList.appendChild(memoCard);
+        });
+      }
+
+      function startEditMemo(index) {
+        editMemoIdx = index;
+        memoInput.value = memos[index].content;
+        saveMemoBtn.innerText = "메모 수정 완료 ✨";
+        memoInput.focus();
+        document.getElementById("memo-tab").scrollTop = 0;
+      }
+
+      function saveMemo() {
+        const content = memoInput.value.trim();
+        if (content === "") return;
+        const now = new Date();
+        const dateString = `${now.getFullYear()}.${now.getMonth() + 1}.${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`;
+
+        if (editMemoIdx !== null) {
+          memos[editMemoIdx].content = content;
+          memos[editMemoIdx].date = dateString;
+          memos[editMemoIdx].isEdited = true;
+          editMemoIdx = null;
+          saveMemoBtn.innerText = "메모 저장하기";
+        } else {
+          memos.unshift({
+            content: content,
+            date: dateString,
+            isEdited: false,
+          });
+        }
+
+        memoInput.value = "";
+        saveData();
+        renderMemos();
+      }
+
+      function deleteMemo(index) {
+        if (editMemoIdx === index) {
+          editMemoIdx = null;
+          memoInput.value = "";
+          saveMemoBtn.innerText = "메모 저장하기";
+        }
+        memos.splice(index, 1);
+        saveData();
+        renderMemos();
+      }
+
+      function saveData() {
+        localStorage.setItem("app_todos", JSON.stringify(todos));
+        localStorage.setItem("app_memos", JSON.stringify(memos));
+      }
+      function saveSettings() {
+        localStorage.setItem("app_settings", JSON.stringify(appSettings));
+      }
+
+      function switchTabDirect(tabName) {
+        currentTab = tabName;
+        if (tabName !== "setting") {
+          pickRandomMessage();
+        }
+
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((tab) => tab.classList.remove("active"));
+        document.getElementById(`${tabName}-tab`).classList.add("active");
+
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        document.getElementById(`nav-${tabName}`).classList.add("active");
+
+        if (tabName === "todo") {
+          checkDailyReset();
+        }
+        renderProfile();
+        if (tabName === "memo") {
+          renderMemos();
+        }
+      }
+
+      function changeAppFont(fontClassName) {
+        appSettings.fontClass = fontClassName;
+        syncBodyClasses();
+        saveSettings();
+      }
+
+      function syncBodyClasses() {
+        document.getElementById("app-body").className =
+          `${appSettings.fontClass} theme-${appSettings.theme}`;
+      }
+
+      function resetAllData() {
+        if (
+          confirm(
+            "정말 모든 설정, 커스텀 배경, 메모, 루틴 목록을 초기화할까요?",
+          )
+        ) {
+          localStorage.clear();
+          loadInitialData();
+          pickRandomMessage();
+          applyBackgroundSettings();
+          renderProfile();
+          renderTodos();
+          renderMemos();
+          alert("성공적으로 초기화가 완료되었습니다.");
+        }
+      }
+
+      pickRandomMessage();
+      checkDailyReset();
+      applyBackgroundSettings();
+      renderProfile();
+      renderTodos();
+      renderMemos();
+
+      addBtn.addEventListener("click", addTodo);
+      todoInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") addTodo();
+      });
+      saveMemoBtn.addEventListener("click", saveMemo);
+    </script>
+  </body>
+</html>

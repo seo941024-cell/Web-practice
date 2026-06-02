@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>SKULL : READY TO DIE</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@1.530/neodgm/style.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="topBar">
+        <div class="hpArea">
+          <span class="hpLabel">HP</span>
+          <div
+            id="playerHpBarWrap"
+            style="
+              width: 150px;
+              height: 16px;
+              background: #200505;
+              border: 2px solid #ffaaaa;
+              position: relative;
+            "
+          >
+            <div
+              id="playerHpFill"
+              style="
+                width: 100%;
+                height: 100%;
+                background: #ff1111;
+                transition: width 0.1s;
+              "
+            ></div>
+            <div
+              id="playerShieldFill"
+              style="
+                width: 0%;
+                height: 100%;
+                background: #00ccff;
+                position: absolute;
+                top: 0;
+                left: 0;
+                transition: width 0.1s;
+                opacity: 0.8;
+                display: none;
+              "
+            ></div>
+            <span
+              id="hpText"
+              style="
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                left: 0;
+                top: -2px;
+                font-size: 14px;
+                font-weight: bold;
+                color: #fff;
+                text-shadow: 1px 1px 2px #000;
+              "
+              >50 / 50</span
+            >
+          </div>
+        </div>
+        <div id="stageLabel">STAGE 1-1</div>
+        <div id="scoreLabel">SCORE: 0</div>
+      </div>
+
+      <div id="bossBarWrap">
+        <div id="bossBarLabel">BOSS</div>
+        <div id="bossTrack"><div id="bossFill" style="width: 100%"></div></div>
+      </div>
+
+      <div id="canvasWrap">
+        <canvas id="c" width="640" height="360"></canvas>
+        <div id="overlay">
+          <h1>SKELETON WARRIOR</h1>
+          <p class="sub">
+            저주에 걸려 해골이 된 용사<br />저주를 풀기위해 마왕을 물리치고
+            세상을 구해주세요!
+          </p>
+          <p
+            class="sub"
+            style="color: #ffaa00; font-weight: bold; margin-top: 15px"
+          >
+            [안내] 패링, 기본공격 시 스킬 게이지가 충전됩니다. <br />게이지를
+            충전해 강력한 스킬을 사용해보세요
+          </p>
+          <p
+            class="sub"
+            style="color: #27ae60; margin-top: 15px; font-size: 14px"
+          >
+            준비가 끝났다면 아래 버튼을 눌러주세요.
+          </p>
+          <button class="startBtn" id="startBtn">▶ READY TO DIE</button>
+        </div>
+      </div>
+
+      <div id="bottomBar">
+        <span id="killLabel">처치: 0</span>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span style="color: #00ccff; font-weight: bold">SKILL</span>
+          <div
+            style="
+              width: 100px;
+              height: 12px;
+              background: #111;
+              border: 1px solid #00ccff;
+              position: relative;
+            "
+          >
+            <div
+              id="mpFill"
+              style="
+                width: 0%;
+                height: 100%;
+                background: #00ccff;
+                transition: width 0.1s;
+              "
+            ></div>
+          </div>
+          <span id="skillLabel" style="color: #00ccff; font-size: 12px"
+            >0%</span
+          >
+        </div>
+      </div>
+
+      <div id="keyGuideBar">
+        [조작] ← → 이동 | Z 대쉬 | X 점프 | C 평타 (타격 시 충전) | Shift 필살기
+        | V 가드/패링
+      </div>
+    </div>
+
+    <script src="js/core.js"></script>
+    <script src="js/entities.js"></script>
+    <script src="js/stage.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

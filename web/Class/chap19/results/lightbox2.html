@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>라이트박스</title>
+    <link rel="stylesheet" href="css/lightbox.css" />
+  </head>
+  <body>
+    <div class="row">
+      <ul>
+        <li>
+          <img
+            src="./images/tree-1-thumb.jpg"
+            data-src="images/tree-1.jpg"
+            class="pic"
+          />
+        </li>
+        <li>
+          <img
+            src="images/tree-2-thumb.jpg"
+            data-src="images/tree-2.jpg"
+            class="pic"
+          />
+        </li>
+        <li>
+          <img
+            src="images/tree-3-thumb.jpg"
+            data-src="images/tree-3.jpg"
+            class="pic"
+          />
+        </li>
+        <li>
+          <img
+            src="images/tree-4-thumb.jpg"
+            data-src="images/tree-4.jpg"
+            class="pic"
+          />
+        </li>
+        <li>
+          <img
+            src="images/tree-5-thumb.jpg"
+            data-src="images/tree-5.jpg"
+            class="pic"
+          />
+        </li>
+        <li>
+          <img
+            src="images/tree-6-thumb.jpg"
+            data-src="images/tree-6.jpg"
+            class="pic"
+          />
+        </li>
+      </ul>
+    </div>
+    <div id="lightbox">
+      <img src="images/tree-1.jpg" alt="" id="lightboxImage" />
+    </div>
+
+    <script>
+      const oringSrc = [
+        "images/tree-1.jpg",
+        "images/tree-2.jpg",
+        "images/tree-3.jpg",
+        "images/tree-4.jpg",
+        "images/tree-5.jpg",
+        "images/tree-6.jpg",
+      ];
+
+      //pics = [img, img, img]
+      //pics.forEach(function(pic, index){
+      // pic.addEventListener()
+      // }); <- 사용하는 걸로 바꾸기
+      //pic 클래스 요소 모두 가져오기
+      const pics = document.querySelectorAll(".pic");
+
+      // lightbox 요소 가져오기
+      const lightbox = document.querySelector("#lightbox");
+
+      // lightboxImage 요소 가져오기
+      const lightboxImage = document.querySelector("#lightboxImage");
+
+      // pic 모든 요소에 리스너 붙이기
+      pics.forEach(function (pic, index) {
+        pic.addEventListener("click", function () {
+          // index로 oringSrc 배열에서 원본 이미지 경로 가져오기
+          lightboxImage.src = oringSrc[index];
+
+          // lightbox 요소 보이기
+          lightbox.style.display = "block";
+        });
+      });
+
+      // lightbox 요소 클릭 이벤트 발생시 lightbox 요소 감추기
+      lightbox.onclick = function () {
+        lightbox.style.display = "none";
+      };
+    </script>
+  </body>
+</html>

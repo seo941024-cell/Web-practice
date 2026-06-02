@@ -1,15 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>세션 선택 - switch문</title>
-	<link rel="stylesheet" href="css/switch.css">
-</head>
-<body>	
-	<script>
-		// Do it! switch문으로 조건 체크하기
-
-	</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>세션 선택 - switch문</title>
+    <link rel="stylesheet" href="css/switch.css" />
+  </head>
+  <body>
+    <script>
+      // Do it! switch문으로 조건 체크하기
+      // 사용자의 생일인 달 입력하면, 봄, 여름, 가을, 겨울에 태어났군요를 출력
+      let month = parseInt(prompt("생일 달을 입력하세요 >>"));
+      switch (parseInt(month)) {
+        case 3:
+        case 4:
+        case 5:
+          console.log("봄");
+          break;
+        case 6:
+        case 7:
+        case 8:
+          console.log("여름");
+          break;
+        case 9:
+        case 10:
+        case 11:
+          console.log("가을");
+          break;
+        case 12:
+        case 1:
+        case 2:
+          console.log("겨울");
+          break;
+        default:
+          console.log("잘못된 입력입니다.");
+      }
+    </script>
+  </body>
 </html>

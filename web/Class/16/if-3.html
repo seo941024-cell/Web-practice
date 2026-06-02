@@ -1,14 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>조건문</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-      // 조건 연산자를 사용해 사용자가 입력한 숫자가 3의 배수인지 판별하기 
- 
+      // 조건 연산자를 사용해 사용자가 입력한 숫자가 3의 배수인지 판별하기
+      let userNumber = parseInt(prompt("숫자입력>>"));
+      result =
+        parseInt(userNumber) % 3 === 0
+          ? "3의 배수입니다."
+          : "3의 배수가 아닙니다.";
+      console.log(result);
     </script>
-</body>
+  </body>
 </html>

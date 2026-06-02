@@ -11,13 +11,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   </head>
-
   <body class="theme-purple font-choice-1" id="app-body">
     <div class="app-container" id="main-container">
       <div class="bg-overlay" id="bg-overlay-layer"></div>
@@ -74,7 +68,7 @@
           <textarea
             id="memo-input"
             class="memo-textarea"
-            placeholder="소중한 기록을"
+            placeholder="소중한 기록을 남겨보세요♥️"
           ></textarea>
           <button id="save-memo-btn" class="save-memo-btn">
             메모 저장하기
@@ -140,7 +134,7 @@
               class="theme-btn btn-greenyellow"
               onclick="changeAppTheme('greenyellow')"
             >
-              라임
+              그린옐로우
             </button>
             <button class="theme-btn btn-blue" onclick="changeAppTheme('blue')">
               블루
@@ -295,27 +289,8 @@
       </div>
     </div>
 
-    <div id="crop-modal" class="crop-modal">
-      <div class="crop-container">
-        <div class="crop-image-area">
-          <img id="crop-preview-target" src="" />
-        </div>
-        <div class="crop-btn-group">
-          <button class="crop-cancel-btn" onclick="closeCropModal()">
-            취소
-          </button>
-          <button class="crop-confirm-btn" onclick="confirmCroppedImage()">
-            동그라미 영역 자르기 ✔️
-          </button>
-        </div>
-      </div>
-    </div>
-
     <script>
       let appTitle, memoTitleText, todos, memos, profile, appSettings;
-      let cropper = null; // 크롭 객체 임시 보관함
-      let tempCroppedBase64 = ""; // 임시 임포트 이미지 데이터
-      let editMemoIdx = null; // 현재 수정 중인 메모의 인덱스 추적 변수 (null이면 신규 작성)
 
       function loadInitialData() {
         appTitle = localStorage.getItem("app_todo_title") || "오늘의 할 일";
@@ -330,12 +305,13 @@
           image: "",
         };
 
+        // 폰트 상태 보존용 디폴트 구조 확장
         appSettings = JSON.parse(localStorage.getItem("app_settings")) || {
           theme: "purple",
           customBg: "",
           bgSize: "cover",
           bgOpacity: 55,
-          fontClass: "font-choice-1",
+          fontClass: "font-choice-1", // 기본값 메모넌트꾹꾹
         };
       }
       loadInitialData();
@@ -343,10 +319,12 @@
       const healingMessages = [
         "오늘도 반짝이는 하루 보내기 ⭐",
         "넌 지금도 충분히 잘하고 있어 💫",
+
         "너만의 리듬대로 천천히 가도 돼 🎵",
         "오늘도 멋진 하루가 널 기다려 💛",
         "네 가치는 언제나 세계 최고야 🌏",
         "작은 성공들이 모여 빛날 거야 ✨",
+
         "네 모든 꿈을 온 마음으로 응원해 🌈",
         "오늘도 기분 좋은 에너지가 가득! 🔋",
         "오늘 한 걸음 내딛은 널 칭찬해 👏",
@@ -520,58 +498,13 @@
         bgSizeSelect.value = appSettings.bgSize;
         bgOpacitySlider.value = appSettings.bgOpacity;
 
+        // 라디오 버튼 체크 상태 복원 적용
         const storedFontRadio = document.getElementById(
           `font-r-${appSettings.fontClass.split("-")[2]}`,
         );
         if (storedFontRadio) storedFontRadio.checked = true;
 
         syncBodyClasses();
-      }
-
-      profileFileInput.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (event) {
-            document.getElementById("crop-modal").style.display = "flex";
-            const imageEl = document.getElementById("crop-preview-target");
-            imageEl.src = event.target.result;
-
-            if (cropper) {
-              cropper.destroy();
-            }
-
-            cropper = new Cropper(imageEl, {
-              aspectRatio: 1,
-              viewMode: 1,
-              background: false,
-              autoCropArea: 0.8,
-            });
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-
-      function confirmCroppedImage() {
-        if (!cropper) return;
-        const canvas = cropper.getCroppedCanvas({ width: 200, height: 200 });
-        tempCroppedBase64 = canvas.toDataURL("image/jpeg");
-
-        headerProfileImg.style.backgroundImage = `url(${tempCroppedBase64})`;
-        headerProfileImg.innerHTML = "";
-        settingProfilePreview.style.backgroundImage = `url(${tempCroppedBase64})`;
-        settingProfilePreview.innerHTML = "";
-
-        closeCropModal();
-      }
-
-      function closeCropModal() {
-        document.getElementById("crop-modal").style.display = "none";
-        if (cropper) {
-          cropper.destroy();
-          cropper = null;
-        }
-        profileFileInput.value = "";
       }
 
       function renderProfile() {
@@ -585,25 +518,29 @@
           settingProfilePreview.style.backgroundImage = "none";
           settingProfilePreview.innerHTML = "<span>사진 선택</span>";
         }
-
-        if (tempCroppedBase64 === "") {
-          nicknameInput.value = profile.nickname;
-        }
-
+        nicknameInput.value = profile.nickname;
         headerMessage.innerHTML =
           currentTab === "setting"
-            ? `오늘도 힘내요, 반가워요!<br><strong>${profile.nickname}</strong>님♥️`
+            ? `오늘도 힘내요, 반가워요! <strong>${profile.nickname}</strong>님♥️`
             : currentRandomMessage;
       }
+
+      profileFileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            profile.image = event.target.result;
+            renderProfile();
+          };
+          reader.readAsDataURL(file);
+        }
+      });
 
       saveProfileBtn.addEventListener("click", () => {
         const newName = nicknameInput.value.trim();
         if (newName !== "") {
           profile.nickname = newName;
-          if (tempCroppedBase64 !== "") {
-            profile.image = tempCroppedBase64;
-            tempCroppedBase64 = "";
-          }
           localStorage.setItem("app_profile", JSON.stringify(profile));
           renderProfile();
           alert("프로필 변경이 완료되었습니다! 💞");
@@ -745,11 +682,8 @@
           memoCard.className = "memo-card";
           memoCard.innerHTML = `
                     <div class="memo-card-header">
-                        <span class="memo-date">${memo.date} ${memo.isEdited ? "(수정됨)" : ""}</span>
-                        <div class="memo-btn-box">
-                            <button class="memo-edit-btn" onclick="startEditMemo(${index})">수정</button>
-                            <button class="memo-delete-btn" onclick="deleteMemo(${index})">삭제</button>
-                        </div>
+                        <span class="memo-date">${memo.date}</span>
+                        <button class="memo-delete-btn" onclick="deleteMemo(${index})">삭제</button>
                     </div>
                     <div class="memo-card-content">${memo.content.replace(/\n/g, "<br>")}</div>
                 `;
@@ -757,45 +691,18 @@
         });
       }
 
-      function startEditMemo(index) {
-        editMemoIdx = index;
-        memoInput.value = memos[index].content;
-        saveMemoBtn.innerText = "메모 수정 완료 ✨";
-        memoInput.focus();
-        document.getElementById("memo-tab").scrollTop = 0;
-      }
-
       function saveMemo() {
         const content = memoInput.value.trim();
         if (content === "") return;
         const now = new Date();
         const dateString = `${now.getFullYear()}.${now.getMonth() + 1}.${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`;
-
-        if (editMemoIdx !== null) {
-          memos[editMemoIdx].content = content;
-          memos[editMemoIdx].date = dateString;
-          memos[editMemoIdx].isEdited = true;
-          editMemoIdx = null;
-          saveMemoBtn.innerText = "메모 저장하기";
-        } else {
-          memos.unshift({
-            content: content,
-            date: dateString,
-            isEdited: false,
-          });
-        }
-
+        memos.unshift({ content: content, date: dateString });
         memoInput.value = "";
         saveData();
         renderMemos();
       }
 
       function deleteMemo(index) {
-        if (editMemoIdx === index) {
-          editMemoIdx = null;
-          memoInput.value = "";
-          saveMemoBtn.innerText = "메모 저장하기";
-        }
         memos.splice(index, 1);
         saveData();
         renderMemos();
@@ -834,12 +741,14 @@
         }
       }
 
+      // 🌟 수정: 실시간 클래스 저장 및 동기화 구현
       function changeAppFont(fontClassName) {
         appSettings.fontClass = fontClassName;
         syncBodyClasses();
         saveSettings();
       }
 
+      // 바디 클래스 병합 유틸리티 함수
       function syncBodyClasses() {
         document.getElementById("app-body").className =
           `${appSettings.fontClass} theme-${appSettings.theme}`;

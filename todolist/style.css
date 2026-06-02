@@ -161,14 +161,15 @@ body {
 }
 
 .profile-info { display: flex; flex-direction: column; }
-.welcome-text { font-size: 17px; color: var(--main-theme-dark); line-height: 1.4; }
+.welcome-text { font-size: 17px; color: var(--main-theme-dark); }
 .welcome-text strong { color: var(--main-theme); font-weight: bold; }
 
+/* 🌟 스크롤 영역 하단에 메뉴바 크기만큼의 마진 여백을 주어 투두 항목이 메뉴를 가리지 않게 가독성 확보 */
 .content-area {
     position: relative;
     z-index: 2;
     flex: 1;
-    padding: 10px 20px 85px 20px;
+    padding: 10px 20px 85px 20px; /* 아래쪽 패딩을 85px로 넓혀 스크롤 공간을 미리 확보! */
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -184,7 +185,7 @@ body {
 }
 
 .sub-title { color: var(--main-theme-dark); font-size: 16px; font-weight: bold; }
-.input-group { display: flex; gap: 10px; align-items: center; position: relative; }
+.input-group { display: flex; gap: 10px; }
 
 .todo-input {
     flex: 1; padding: 12px 18px; border: 2px solid var(--main-theme-light); border-radius: 20px;
@@ -192,21 +193,9 @@ body {
 }
 .todo-input:focus { border-color: var(--main-theme); }
 
-/* 🌟 대폭 교정: 어떤 폰트의 고유 상하 여백 오프셋 상태에서도 '+'가 동그라미 한가운데 고정되도록 완전 수치화 정렬 */
 .add-btn {
     background-color: var(--main-theme); color: white; border: none; width: 45px; height: 45px;
-    border-radius: 50%; font-size: 26px; cursor: pointer; 
-    display: flex; align-items: center; justify-content: center;
-    line-height: 0; padding: 0; margin: 0; flex-shrink: 0; 
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    text-indent: 0; text-align: center;
-}
-/* 메이플스토리체 등 특수 폰트 하향 쏠림 대응 보정 가이드 */
-.add-btn::before {
-    content: '';
-    display: inline-block;
-    height: 0;
-    vertical-align: middle;
+    border-radius: 50%; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;
 }
 
 .todo-list { display: flex; flex-direction: column; gap: 10px; list-style: none; }
@@ -235,6 +224,7 @@ body {
 .delete-btn { background: none; border: none; color: #cca4a4; cursor: pointer; font-size: 16px; }
 .delete-btn:hover { color: #ba7979; }
 
+/* 메모 공간 */
 .memo-write-box { display: flex; flex-direction: column; gap: 8px; }
 .memo-textarea {
     width: 100%; height: 100px; border: 2px solid var(--main-theme-light); border-radius: 20px;
@@ -246,17 +236,10 @@ body {
 .memo-card { background-color: rgba(255, 255, 255, 0.9); border: 1px solid var(--main-theme-light); border-radius: 20px; padding: 15px; display: flex; flex-direction: column; gap: 5px; }
 .memo-card-header { display: flex; justify-content: space-between; align-items: center; }
 .memo-date { font-size: 11px; color: #888; }
+.memo-delete-btn { background: none; border: none; color: #dbccd1; font-size: 12px; cursor: pointer; }
+.memo-card-content { font-size: 15px; color: #333; line-height: 1.4; }
 
-.memo-btn-box { display: flex; gap: 10px; align-items: center; }
-
-/* 🌟 대폭 교정: 수정 칸도 삭제 단추처럼 투명하고 완전 외곽선(border) 없는 순수 글자 스타일로 정립 */
-.memo-edit-btn { background: none; border: none; color: #a4b6cc; font-size: 12px; cursor: pointer; padding: 0; outline: none; box-shadow: none; }
-.memo-edit-btn:hover { color: #7697bf; }
-.memo-delete-btn { background: none; border: none; color: #dbccd1; font-size: 12px; cursor: pointer; padding: 0; outline: none; box-shadow: none; }
-.memo-delete-btn:hover { color: #ba798f; }
-
-.memo-card-content { font-size: 15px; color: #333; line-height: 1.4; word-break: break-all; }
-
+/* 설정 영역 */
 .setting-section { background-color: rgba(255, 255, 255, 0.82); border-radius: 22px; padding: 15px; border: 1px solid var(--main-theme-light); }
 .section-title { font-size: 15px; color: var(--main-theme-dark); margin-bottom: 10px; }
 
@@ -283,13 +266,16 @@ body {
 .font-option { display: flex; align-items: center; padding: 12px 15px; background-color: rgba(255, 255, 255, 0.9); border: 1px solid var(--main-theme-light); border-radius: 15px; cursor: pointer; font-size: 14px; color: #333; }
 .font-option input { margin-right: 12px; accent-color: var(--main-theme); }
 
-.app-reset-btn { width: 100%; background-color: #a8282e; color: white; border: none; padding: 14px; border-radius: 18px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: auto; }
+.app-reset-btn { width: 100%; background-color: #e69195; color: white; border: none; padding: 14px; border-radius: 18px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: auto; }
 
+/* ==========================================================================
+   🪟 단색 윈도우 스타일 내비게이션 바 고정형 완벽 아키텍처
+   ========================================================================== */
 .under-navigation-bar {
-    position: absolute; 
+    position: absolute; /* 🌟 중요: relative를 absolute로 바꾸어 화면 최하단에 절대 고정 */
     bottom: 0;
     left: 0;
-    z-index: 10; 
+    z-index: 10; /* 투두 항목보다 훨씬 위에 띄움 */
     width: 100%;
     height: 68px; 
     background-color: rgba(255, 255, 255, 0.96);
@@ -335,6 +321,7 @@ body {
     transition: all 0.15s ease;
 }
 
+/* 윈도우 홈 */
 .icon-win-home {
     width: 15px;
     height: 15px;
@@ -358,6 +345,7 @@ body {
 .nav-btn.active .icon-win-home::before,
 .nav-btn.active .icon-win-home::after { background-color: var(--main-theme); }
 
+/* 윈도우 메모 */
 .icon-win-memo {
     width: 13px;
     height: 16px;
@@ -375,6 +363,7 @@ body {
 .nav-btn.active .icon-win-memo { border-color: var(--main-theme); }
 .nav-btn.active .icon-win-memo::before { background-color: var(--main-theme); box-shadow: 0 4px 0 var(--main-theme); }
 
+/* 윈도우 설정 */
 .icon-win-setting {
     width: 15px;
     height: 15px;
@@ -396,54 +385,3 @@ body {
 
 .tab-content { display: none; }
 .tab-content.active { display: flex; flex-direction: column; }
-
-.crop-modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.85);
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-.crop-container {
-    background-color: #fff;
-    width: 100%;
-    max-width: 380px;
-    border-radius: 24px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-.crop-image-area {
-    width: 100%;
-    height: 350px;
-    background-color: #222;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.crop-image-area img {
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-}
-.crop-btn-group {
-    display: flex;
-    padding: 12px;
-    gap: 10px;
-    background-color: #f7f5fa;
-}
-.crop-cancel-btn {
-    flex: 1; border: none; padding: 12px; border-radius: 12px; background-color: #e4e1e8;
-    color: #555; font-weight: bold; cursor: pointer; font-size: 14px;
-}
-.crop-confirm-btn {
-    flex: 1.5; border: none; padding: 12px; border-radius: 12px; background-color: var(--main-theme);
-    color: white; font-weight: bold; cursor: pointer; font-size: 14px;
-}
-.cropper-view-box, .cropper-face {
-    border-radius: 50% !important;
-}

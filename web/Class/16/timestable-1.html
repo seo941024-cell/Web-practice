@@ -1,15 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>구구단 - for문</title>
-</head>
-<body>
-	<h1>구구단</h1>
-	<script>
-		// Do it! for문을 사용해 구구단 출력하기	
-		
-	</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>구구단 - for문</title>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+      }
+      .times {
+        border: 3px solid #ccc;
+        border-radius: 10px;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>구구단</h1>
+    <div class="container">
+      <script>
+        let targetUnit = prompt("몇 단까지 출력할까요? (2~9) >>");
+        targetUnit = parseInt(targetUnit);
+
+        for (let i = 2; i <= targetUnit; i++) {
+          document.write(`<div class="times">`);
+          document.write(`<h3>${i}단</h3>`);
+          for (let j = 1; j <= 9; j++) {
+            document.write(`${i} X ${j} = ${i * j} <br>`);
+          }
+          document.write(`</div>`);
+        }
+      </script>
+    </div>
+  </body>
 </html>

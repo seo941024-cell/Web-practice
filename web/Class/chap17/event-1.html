@@ -1,18 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>자바스크립트 이벤트</title>
-	<link rel="stylesheet" href="css/function.css">
-</head>
-<body>
-	<!-- Do it! HTML 요소에 이벤트 처리기 연결하기 -->
-	<ul>
-		<li><a href="#">Green</a></li>
-		<li><a href="#">Orange</a></li>
-		<li><a href="#">Purple</a></li>
-	</ul>		
-	<div id="result"></div>
-</body>
-</html>  
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>자바스크립트 이벤트</title>
+    <link rel="stylesheet" href="css/function.css" />
+  </head>
+  <body>
+    <!-- Do it! <a> 요소 클릭(onclick)하면 alert('클릭했습니다.') 띄우기 -->
+    <ul>
+      <li><a href="#">Green</a></li>
+      <li><a href="#" onclick="msg()">Orange</a></li>
+      <li><a href="#" onclick="bgColor('purple')">Purple</a></li>
+    </ul>
+    <div id="result"></div>
+    <script>
+      function msg() {
+        alert("Orange 클릭했습니다.");
+      }
+
+      const result = documnet.querySelector("#result");
+      console.log(result);
+
+      function bgChange(color) {
+        result.style.backgroundColor = color;
+      }
+      redLi.onclick = redBg;
+
+      function redBg() {
+        result.style.backgroundColor = "red";
+      }
+
+      window.onload = function () {
+        const liEl = document.querySelector("li");
+        liEl.onclick = function () {
+          aler("클릭했습니다.");
+        };
+      };
+    </script>
+  </body>
+</html>

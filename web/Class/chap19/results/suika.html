@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>수박게임 (절대 안 깨지는 버전)</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Jua&display=swap");
+
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: #ffdbdb;
+        font-family: "Jua", sans-serif;
+        user-select: none;
+        color: #333;
+      }
+
+      h1 {
+        margin: 0 0 15px 0;
+        font-size: 2.5rem;
+        color: #ff4d4d;
+      }
+
+      #main-wrapper {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+      }
+
+      #game-container {
+        position: relative; /* 자식 요소(과일)의 기준점 */
+        width: 400px;
+        height: 600px;
+        background-color: #ffffff; /* 완전 흰색 */
+        border: 8px solid #dcb796;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      /* 💡 추가된 핵심 부분: 이모지가 들어갈 HTML 태그 디자인 */
+      .fruit-emoji {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none; /* 마우스 클릭 방해 금지 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 1;
+        z-index: 5; /* 캔버스 위로 올리기 */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* 살짝 입체감 */
+      }
+
+      #score-board {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        font-size: 26px;
+        font-weight: bold;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.4);
+        padding: 5px 15px;
+        border-radius: 20px;
+        z-index: 10;
+      }
+
+      #game-over {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+      }
+
+      #game-over h2 {
+        font-size: 45px;
+        margin: 0 0 15px 0;
+        color: #ff6b6b;
+      }
+      #game-over p {
+        font-size: 24px;
+        margin: 0 0 25px 0;
+      }
+
+      #restart-btn {
+        padding: 12px 30px;
+        font-size: 22px;
+        cursor: pointer;
+        border: none;
+        border-radius: 30px;
+        background-color: #ff6b6b;
+        color: white;
+        font-family: "Jua", sans-serif;
+        transition: transform 0.1s;
+      }
+      #restart-btn:hover {
+        transform: scale(1.05);
+      }
+
+      #guide-panel {
+        width: 100px;
+        background-color: #fff;
+        border: 4px solid #dcb796;
+        border-radius: 15px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      #guide-panel h3 {
+        margin: 0 0 10px 0;
+        font-size: 18px;
+        color: #555;
+      }
+      .guide-item {
+        font-size: 24px;
+      }
+      .guide-arrow {
+        color: #ccc;
+        font-size: 14px;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  </head>
+  <body>
+    <h1>🍉 수박게임</h1>
+
+    <div id="main-wrapper">
+      <div id="game-container">
+        <div id="score-board">점수: <span id="score">0</span></div>
+        <div id="game-over">
+          <h2>GAME OVER!</h2>
+          <p>최종 점수: <span id="final-score">0</span></p>
+          <button id="restart-btn" onclick="location.reload()">
+            다시 하기
+          </button>
+        </div>
+      </div>
+
+      <div id="guide-panel">
+        <h3>진화 순서</h3>
+      </div>
+    </div>
+
+    <script>
+      const FRUITS = [
+        { name: "딸기", radius: 18, emoji: "🍓" },
+        { name: "사과", radius: 29, emoji: "🍎" },
+        { name: "포도", radius: 36, emoji: "🍇" },
+        { name: "배", radius: 49, emoji: "🍐" },
+        { name: "멜론", radius: 61, emoji: "🍈" },
+        { name: "복숭아", radius: 76, emoji: "🍑" },
+        { name: "파인애플", radius: 92, emoji: "🍍" },
+        { name: "수박", radius: 125, emoji: "🍉" },
+      ];
+
+      const guidePanel = document.getElementById("guide-panel");
+      FRUITS.forEach((fruit, index) => {
+        const item = document.createElement("div");
+        item.className = "guide-item";
+        item.innerText = fruit.emoji;
+        guidePanel.appendChild(item);
+        if (index < FRUITS.length - 1) {
+          const arrow = document.createElement("div");
+          arrow.className = "guide-arrow";
+          arrow.innerText = "▼";
+          guidePanel.appendChild(arrow);
+        }
+      });
+
+      const Engine = Matter.Engine,
+        Render = Matter.Render,
+        Runner = Matter.Runner,
+        Bodies = Matter.Bodies,
+        Composite = Matter.Composite,
+        Events = Matter.Events,
+        Body = Matter.Body;
+
+      const engine = Engine.create({ gravity: { y: 1.5 } });
+      const world = engine.world;
+      const gameContainer = document.getElementById("game-container");
+
+      const render = Render.create({
+        element: gameContainer,
+        engine: engine,
+        options: {
+          width: 400,
+          height: 600,
+          wireframes: false,
+          background: "transparent",
+        },
+      });
+
+      const wallOptions = { isStatic: true, render: { visible: false } };
+      const ground = Bodies.rectangle(200, 620, 480, 60, wallOptions);
+      const leftWall = Bodies.rectangle(-20, 300, 60, 600, wallOptions);
+      const rightWall = Bodies.rectangle(420, 300, 60, 600, wallOptions);
+
+      // 빨간색 데드라인
+      const topLine = Bodies.rectangle(200, 80, 400, 2, {
+        isStatic: true,
+        isSensor: true,
+        render: { fillStyle: "#ff6b6b", opacity: 0.5 },
+      });
+
+      Composite.add(world, [ground, leftWall, rightWall, topLine]);
+
+      let currentFruit = null;
+      let isDropping = false;
+      let score = 0;
+      let isGameOver = false;
+
+      const scoreElement = document.getElementById("score");
+      const gameOverScreen = document.getElementById("game-over");
+      const finalScoreElement = document.getElementById("final-score");
+
+      // 💡 캔버스 의존도를 버리고 HTML Element로 과일을 그립니다!
+      function createFruit(x, y, index, isStatic = false) {
+        const fruitDef = FRUITS[index];
+
+        // 1. 눈에 보이지 않는 물리 충돌용 원 생성
+        const fruit = Bodies.circle(x, y, fruitDef.radius, {
+          isStatic: isStatic,
+          restitution: 0.2,
+          friction: 0.05,
+          density: 0.001 * (index + 1),
+          render: { visible: false }, // 도화지에는 투명하게 처리 (안 그림)
+          fruitIndex: index,
+          collisionFilter: { group: isStatic ? -1 : 0 },
+        });
+        fruit.createdAt = Date.now();
+
+        // 2. 화면에 확실하게 보일 HTML 이모지 태그 생성
+        const el = document.createElement("div");
+        el.className = "fruit-emoji";
+        el.innerText = fruitDef.emoji;
+        el.style.width = `${fruitDef.radius * 2}px`;
+        el.style.height = `${fruitDef.radius * 2}px`;
+        // 중심점을 맞추기 위한 마진
+        el.style.marginLeft = `-${fruitDef.radius}px`;
+        el.style.marginTop = `-${fruitDef.radius}px`;
+        // 이모지 크기 조정
+        el.style.fontSize = `${fruitDef.radius * 1.5}px`;
+
+        // 컨테이너에 추가
+        gameContainer.appendChild(el);
+
+        // 물리 엔진 데이터에 HTML 태그 연결
+        fruit.domElement = el;
+
+        return fruit;
+      }
+
+      function spawnNextFruit() {
+        if (isGameOver) return;
+        const randomIndex = Math.floor(Math.random() * 3);
+        currentFruit = createFruit(200, 40, randomIndex, true);
+        Composite.add(world, currentFruit);
+        isDropping = false;
+      }
+
+      gameContainer.addEventListener("mousemove", (e) => {
+        if (isDropping || !currentFruit || isGameOver) return;
+        const rect = gameContainer.getBoundingClientRect();
+        let x = e.clientX - rect.left - 8;
+
+        const limit = FRUITS[currentFruit.fruitIndex].radius;
+        if (x < limit) x = limit;
+        if (x > 400 - limit) x = 400 - limit;
+
+        Body.setPosition(currentFruit, { x: x, y: 40 });
+      });
+
+      gameContainer.addEventListener("click", () => {
+        if (isDropping || !currentFruit || isGameOver) return;
+        isDropping = true;
+
+        Body.setVelocity(currentFruit, { x: 0, y: 0 });
+        Body.setAngularVelocity(currentFruit, 0);
+
+        currentFruit.collisionFilter.group = 0;
+        Body.setStatic(currentFruit, false);
+
+        currentFruit = null;
+        setTimeout(spawnNextFruit, 800);
+      });
+
+      // 충돌(합치기) 시 이벤트
+      Events.on(engine, "collisionStart", (event) => {
+        if (isGameOver) return;
+        event.pairs.forEach((pair) => {
+          const bodyA = pair.bodyA;
+          const bodyB = pair.bodyB;
+
+          if (
+            bodyA.fruitIndex !== undefined &&
+            bodyA.fruitIndex === bodyB.fruitIndex
+          ) {
+            const index = bodyA.fruitIndex;
+
+            if (index < FRUITS.length - 1) {
+              if (bodyA.isMerging || bodyB.isMerging) return;
+              bodyA.isMerging = true;
+              bodyB.isMerging = true;
+
+              const newX = (bodyA.position.x + bodyB.position.x) / 2;
+              const newY = (bodyA.position.y + bodyB.position.y) / 2;
+
+              // 물리 엔진에서 삭제
+              Composite.remove(world, [bodyA, bodyB]);
+
+              // 💡 화면(HTML)에서도 즉시 삭제!
+              if (bodyA.domElement) bodyA.domElement.remove();
+              if (bodyB.domElement) bodyB.domElement.remove();
+
+              // 새 과일 생성
+              const newFruit = createFruit(newX, newY, index + 1);
+              Composite.add(world, newFruit);
+
+              score += (index + 1) * 10;
+              scoreElement.innerText = score;
+            }
+          }
+        });
+      });
+
+      // 💡 물리 엔진의 움직임에 따라 HTML 이모지 위치를 실시간으로 맞춤
+      Events.on(engine, "afterUpdate", () => {
+        engine.world.bodies.forEach((body) => {
+          if (body.domElement) {
+            // x, y 좌표와 회전(각도)을 CSS로 입혀줌
+            body.domElement.style.transform = `translate(${body.position.x}px, ${body.position.y}px) rotate(${body.angle}rad)`;
+          }
+        });
+
+        // 게임 오버 조건 체크 (선 넘기 판정)
+        if (!isGameOver) {
+          engine.world.bodies.forEach((body) => {
+            if (
+              body.fruitIndex !== undefined &&
+              !body.isStatic &&
+              Date.now() - body.createdAt > 2000
+            ) {
+              if (body.position.y < 80 && Math.abs(body.velocity.y) < 0.3) {
+                triggerGameOver();
+              }
+            }
+          });
+        }
+      });
+
+      function triggerGameOver() {
+        isGameOver = true;
+        finalScoreElement.innerText = score;
+        gameOverScreen.style.display = "flex";
+        engine.timing.timeScale = 0; // 물리 엔진 정지
+      }
+
+      // 게임 시작
+      Render.run(render);
+      const runner = Runner.create();
+      Runner.run(runner, engine);
+      spawnNextFruit();
+    </script>
+  </body>
+</html>

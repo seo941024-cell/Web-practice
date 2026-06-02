@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const menu = {
+            1: { name: "콜라", price: 1500 },
+            2: { name: "사이다", price: 1300 },
+            3: { name: "물", price: 800 }
+        };
+
+        while (true){
+            let select = parseInt(prompt(`메뉴선택하세요\n
+            1.${menu[1].name}:${menu[1].price}\n
+            2.${menu[2].name}:${menu[2].price}\n
+            3.${menu[3].name}:${menu[3].price}\n
+            4.종료`));
+            
+            if ( select === 4 || select === null){
+                console.log('프로그램 종료');
+                break;
+            }
+            
+            console.log(menu[select])
+    }
+    </script>
+</body>
+</html>
